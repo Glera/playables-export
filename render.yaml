@@ -1,0 +1,18 @@
+# Render.com deploy config — single static-site service that publishes the
+# repo root. Connect this repo on render.com (New → Static Site → pick this
+# repo). Render reads the file on first push and provisions the service.
+# Subsequent pushes auto-deploy.
+services:
+  - type: web
+    name: playables-export
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: ./
+    headers:
+      # Cache aggressively but allow easy overrides — playable creatives are
+      # immutable once exported (filename = id, no version suffix), so the
+      # browser can keep them locally for the entire session. Set a moderate
+      # max-age so an iteration is visible the next day without manual purge.
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
