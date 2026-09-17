@@ -21,19 +21,19 @@ function setupBuildings(){
   const key={shredder:'body-press-v13',molder:'wheel-fitter-v13',assembly:'toy-finisher-v13',depot:'cottage-v13'}[role];
   const w={shredder:4.6,molder:3.55,assembly:3.2,depot:n.name.endsWith('2')?7:5.4}[role];
   const front={shredder:1,molder:.9,assembly:.8,depot:1.25}[role];
-  r.enabled=false;const art=billboard(n,'RiverPainted_'+role,key,p.x,Math.max(.07,p.y),p.z+front,w,w*(role==='depot'?.95:.82));
+  r.enabled=false;const art=role==='shredder'?window.riverFactory3D.build(n,p):billboard(n,'RiverPainted_'+role,key,p.x,Math.max(.07,p.y),p.z+front,w,w*(role==='depot'?.95:.82));
   // Only the intended source factory animation scales the parent; geometry and
   // alpha-tested depth stay in world space at rest, with no overlay render layer.
-  stats.generatedBuildings.push({name:n.name,role,width:w,position:[p.x,p.y,p.z],art:key});
+  stats.generatedBuildings.push({name:n.name,role,width:w,position:[p.x,p.y,p.z],art:role==='shredder'?'first-conveyor.glb revision 2':key});
   if(role!=='depot'){
    n.getComponents('cc.Collider').forEach(c=>c.enabled=false);
-   const obstacle=new cc.Node('RiverMachineCollider');scene.addChild(obstacle);obstacle.setWorldPosition(p.x,1,p.z-.15);obstacle.setWorldRotationFromEuler(0,0,0);obstacle.setWorldScale(1,1,1);
-   const c=obstacle.addComponent('cc.BoxCollider');c.size=new cc.Vec3(role==='assembly'?2.3:w*.90,2,role==='shredder'?2.9:role==='assembly'?1.8:2.35);c.isTrigger=false;c.setGroup(1);c.setMask(35011);obstacle.setParent(n,true);
+   const obstacle=new cc.Node('RiverMachineCollider');scene.addChild(obstacle);obstacle.setWorldPosition(p.x,1,p.z-.15);obstacle.setWorldRotationFromEuler(0,0,0);obstacle.setWorldScale(1,1,1);if(role==='shredder'){obstacle.setWorldPosition(p.x,1.25,p.z);obstacle.setWorldRotation(art.worldRotation);}
+   const c=obstacle.addComponent('cc.BoxCollider');c.size=new cc.Vec3(role==='shredder'?4.05:role==='assembly'?2.3:w*.90,role==='shredder'?2.5:2,role==='shredder'?2.30:role==='assembly'?1.8:2.35);c.isTrigger=false;c.setGroup(1);c.setMask(35011);obstacle.setParent(n,true);
    stats.machineColliders=(stats.machineColliders||0)+1;
   }
  }
  // The old exterior machine attachments no longer fit the new housing.
- for(const n of all)if(/^SM_JiQi_B_(?!ChuKou)/.test(n.name))n.getComponents('cc.MeshRenderer').forEach(r=>r.enabled=false);
+ for(const n of all)if(/^SM_JiQi_B_/.test(n.name))n.getComponents('cc.MeshRenderer').forEach(r=>r.enabled=false);
  for(const f of [comp('JiFactory'),comp('JiHeFactory')]){
   const stack=f.stackMeatHigh,oldFly=stack.fly,oldPop=stack.popItemStack;
   const x=f===comp('JiFactory')?-8.15:-9.85,z=f===comp('JiFactory')?-6.55:-1.65;
@@ -137,6 +137,6 @@ async function ending(){
   }catch(e){stats.errors.push('End animation: '+e.message);end.querySelector('.pp-brand-hero')?.style.setProperty('display','block');}
  };new MutationObserver(show).observe(document.body,{childList:true,subtree:true});show();
 }
-async function start(){cc=window.cclegacy||window.cc;stats=window.riverWorkshop;api=window.riverSceneTools;if(!stats?.ready||!api)return false;scene=cc.director.getScene();await Promise.all(['body-press-v13','wheel-fitter-v13','toy-finisher-v13','cottage-v13'].map(loadArt));setupBuildings();terrain();pads();transfers();particles();restoration();ending();stats.polishReady=true;return true;}
+async function start(){cc=window.cclegacy||window.cc;stats=window.riverWorkshop;api=window.riverSceneTools;if(!stats?.ready||!api)return false;scene=cc.director.getScene();await Promise.all(['body-press-v13','wheel-fitter-v13','toy-finisher-v13','cottage-v13'].map(loadArt));await window.riverFactory3D.prepare(cc,api,scene);setupBuildings();terrain();pads();transfers();particles();restoration();ending();stats.polishReady=true;return true;}
 let busy=false;const timer=setInterval(async()=>{if(busy)return;busy=true;try{if(await start())clearInterval(timer);}catch(e){clearInterval(timer);(window.riverWorkshop?.errors||[]).push('Polish: '+e.message);console.error(e);}busy=false;},50);
 })();

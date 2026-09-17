@@ -21,7 +21,7 @@ footer{display:flex;justify-content:space-between;gap:20px;margin-top:22px;paddi
 </style>
 </head>
 <body><main>
-<header><div class="brand"><img class="logo" src="./copy/radar-brand/logo.webp" alt="Pines Peak"><div><div class="eyebrow">Сравнение концептов</div><h1>Оригинал и наш рескин</h1></div></div><span class="version">Речная мастерская · v13</span></header>
+<header><div class="brand"><img class="logo" src="./copy/radar-brand/logo.webp" alt="Pines Peak"><div><div class="eyebrow">Сравнение концептов</div><h1>Оригинал и наш рескин</h1></div></div><span class="version">Первый 3D-станок · v14</span></header>
 <section class="grid" aria-label="Две версии игры">
 <article class="card" id="card-original">
 <div class="card-head"><div><div class="badge">01 / Оригинал</div><h2>Ферма</h2></div><div class="actions"><a class="open" href="./original/" target="_blank" rel="noopener" aria-label="Открыть оригинал в отдельной вкладке">Открыть ↗</a><button type="button" data-play="original" aria-label="Играть в оригинал">Играть</button></div></div>
@@ -30,13 +30,13 @@ footer{display:flex;justify-content:space-between;gap:20px;margin-top:22px;paddi
 <div class="status" aria-live="polite">Нажмите «Играть»</div>
 </article>
 <article class="card running copy" id="card-copy">
-<div class="card-head"><div><div class="badge">02 / Наш рескин</div><h2>Речная мастерская</h2></div><div class="actions"><a class="open" href="./copy/?v=13" target="_blank" rel="noopener" aria-label="Открыть наш рескин в отдельной вкладке">Открыть ↗</a><button type="button" data-play="copy" aria-label="Начать наш рескин заново">Заново</button></div></div>
-<p class="caption">Собираем мусор, очищаем лужайку и реку, собираем машинки: кузов, колёса и готовая игрушка.</p>
-<div class="screen"><img src="./assets/copy.png?v=13" alt="Бутылки на лужайке в речной мастерской" width="390" height="844"><iframe id="copy" src="./copy/?v=13" title="Наш рескин — речная мастерская v13" sandbox="allow-scripts allow-same-origin" allow="autoplay; fullscreen"></iframe></div>
+<div class="card-head"><div><div class="badge">02 / Наш рескин</div><h2>Речная мастерская</h2></div><div class="actions"><a class="open" href="./copy/?v=14" target="_blank" rel="noopener" aria-label="Открыть наш рескин в отдельной вкладке">Открыть ↗</a><button type="button" data-play="copy" aria-label="Начать наш рескин заново">Заново</button></div></div>
+<p class="caption">Первый станок теперь объёмный: пресс, ролики и лампочки. Цепочка: колёса → кузов на колёсах → игрушка.</p>
+<div class="screen"><img src="./assets/copy.png?v=14" alt="Бутылки на лужайке в речной мастерской" width="390" height="844"><iframe id="copy" src="./copy/?v=14" title="Наш рескин — речная мастерская v14" sandbox="allow-scripts allow-same-origin" allow="autoplay; fullscreen"></iframe></div>
 <div class="status" aria-live="polite">Можно играть</div>
 </article>
 </section>
-<footer><p>Перемещайте героя джойстиком. Выберите одну версию для игры здесь или откройте её в отдельной вкладке.</p><span>Pines Peak · 17.09.2026</span></footer>
+<footer><p>Перемещайте героя джойстиком. Выберите одну версию для игры здесь или откройте её в отдельной вкладке.</p><span><a href="https://higgsfield.ai/3d-jutsu/cd4389e5-3906-4e0d-8f5c-cf3847f235ab" target="_blank" rel="noopener">Посмотреть 3D-модель ↗</a> · v14 на приёмку</span></footer>
 </main>
 <script>
 const paths={original:'./original/',copy:'./copy/'};
@@ -48,7 +48,7 @@ function play(id){
   card.querySelector('.status').textContent=active?'Можно играть':'Нажмите «Играть»';
   if(!active&&frame.hasAttribute('src'))frame.removeAttribute('src');
  }
- document.getElementById(id).src=paths[id]+'?v=13&run='+Date.now();
+ document.getElementById(id).src=paths[id]+'?v=14&run='+Date.now();
 }
 document.querySelectorAll('[data-play]').forEach(button=>button.addEventListener('click',()=>play(button.dataset.play)));
 </script></body></html>

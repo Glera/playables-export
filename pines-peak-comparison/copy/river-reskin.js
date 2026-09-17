@@ -11,7 +11,7 @@
  */
 (() => {
   'use strict';
-  const stats = {version:13,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
+  const stats = {version:14,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
   window.riverWorkshop = stats;
   const palette={teal:'#208f98',mint:'#9ce6cb',deep:'#214754',navy:'#284457',yellow:'#ffcc5d',cream:'#f6e8ca',coral:'#e97d58',blue:'#70c9de',dark:'#243b46',white:'#edf9ed',green:'#4f997f'};
   let cc, mainCamera, vertexMaterial, coinMaterial, arrowMaterial, waterMaterial, waterSurface, recoveryText, recoveryFill;
@@ -44,7 +44,7 @@
     }
   }
   function bottle(){const g=geometry();rings(g,0,0,[[0,0],[.025,.15],[.06,.17],[.13,.17],[.16,.155],[.19,.17],[.40,.17],[.43,.155],[.46,.17],[.56,.14],[.64,.067],[.74,.067],[.74,.08],[.81,.08],[.81,0]],['#72c7d1','#b4e8e5','#80d5db','#67b9c8','#beece6','#72cbd3','#e1f3dd','#70c1ce','#b9e6e5','#89d8dd','#5ba9b7','#ffcc5d','#ffcc5d','#ffcc5d']);return g;}
-  function bale(){
+  function unfinishedBody(){
     // Molded truck body: cab, empty windows, open bed and wheel arches.
     const g=geometry();box(g,0,0,.055,.59,.27,.055,palette.coral);
     box(g,-.17,0,.11,.23,.27,.07,palette.coral);
@@ -54,7 +54,8 @@
     for(const x of [.025,.235])for(const y of [-.124,.124])box(g,x,y,.21,.032,.032,.09,palette.coral);
     box(g,.13,0,.30,.28,.29,.025,palette.coral);return g;
   }
-  function toyPart(){const g=geometry();rings(g,0,0,[[0,0],[0,.10],[.025,.115],[.085,.115],[.11,.095],[.11,.045],[.095,.038],[.095,0]],[palette.navy,palette.navy,palette.deep,palette.navy,palette.yellow,palette.cream,palette.cream],16);return g;}
+  function bale(){const g=geometry();rings(g,0,0,[[0,0],[0,.10],[.025,.115],[.085,.115],[.11,.095],[.11,.045],[.095,.038],[.095,0]],[palette.navy,palette.navy,palette.deep,palette.navy,palette.yellow,palette.cream,palette.cream],16);return g;}
+  function toyPart(){const g=unfinishedBody();for(const x of [-.19,.19])for(const y of [-.157,.157])wheel(g,x,y,.077);return g;}
   function wheel(g,x,y,z){
     const w=geometry();rings(w,0,0,[[-.037,0],[-.037,.077],[.037,.077],[.037,.033],[.041,.033],[.041,0]],[palette.navy,palette.navy,palette.navy,palette.cream,palette.cream],10);
     // Rotate the cylinder onto its axle; one mesh keeps whole toy stacks instanced.
@@ -143,8 +144,8 @@
     const size=['x','y','z'].map(k=>hi[k]-lo[k]);
     // Respect the source 0.30 vertical toy pitch and 0.25 block grid.
     if(role==='toy')size.splice(0,3,.60,.38,.285);
-    if(role==='toyPart')size.splice(0,3,.22,.22,.105);
-    if(role==='bale')size.splice(0,3,.56,.29,.19);
+    if(role==='toyPart')size.splice(0,3,.24,.18,.15);
+    if(role==='bale')size.splice(0,3,.24,.24,.11);
     if(role==='houseCoin')size.splice(0,3,.40,.40,.048);
     if(role==='tin')size.splice(0,3,.46,.46,.53);
     if(role==='pointer')size[1]=size[0]; // Avoid the thin source arrow's edge-on silhouette.
@@ -169,11 +170,11 @@
     c.lineJoin='round';c.lineCap='round';
     if(type==='bottle'){
       c.fillStyle=palette.deep;c.fillRect(49,8,30,18);c.fillStyle=palette.blue;c.beginPath();c.roundRect(35,29,58,91,16);c.fill();c.fillRect(48,22,32,18);c.fillStyle=palette.cream;c.fillRect(36,60,56,30);c.strokeStyle=palette.teal;c.lineWidth=5;c.strokeRect(36,60,56,30);
-    }else if(type==='toyPart'){c.fillStyle=palette.navy;c.beginPath();c.arc(64,64,51,0,7);c.fill();c.strokeStyle=palette.deep;c.lineWidth=7;for(let i=0;i<12;i++){const a=i*Math.PI/6;c.beginPath();c.moveTo(64+Math.cos(a)*41,64+Math.sin(a)*41);c.lineTo(64+Math.cos(a)*48,64+Math.sin(a)*48);c.stroke();}c.fillStyle=palette.yellow;c.beginPath();c.arc(64,64,26,0,7);c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(64,64,12,0,7);c.fill();
-    }else if(type==='bale'){
+    }else if(type==='bale'){c.fillStyle=palette.navy;c.beginPath();c.arc(64,64,51,0,7);c.fill();c.strokeStyle=palette.deep;c.lineWidth=7;for(let i=0;i<12;i++){const a=i*Math.PI/6;c.beginPath();c.moveTo(64+Math.cos(a)*41,64+Math.sin(a)*41);c.lineTo(64+Math.cos(a)*48,64+Math.sin(a)*48);c.stroke();}c.fillStyle=palette.yellow;c.beginPath();c.arc(64,64,26,0,7);c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(64,64,12,0,7);c.fill();
+    }else if(type==='toyPart'){
       c.fillStyle=palette.coral;c.beginPath();c.roundRect(11,60,107,30,8);c.fill();c.fillRect(70,31,39,38);c.fillRect(72,24,42,10);
       c.clearRect(82,36,19,21);c.clearRect(20,57,42,12);c.fillRect(11,49,8,20);c.fillRect(60,49,8,20);
-      for(const x of [32,93]){c.fillStyle=palette.deep;c.beginPath();c.arc(x,90,type==='bale'?12:16,0,7);if(type==='bale'){c.save();c.globalCompositeOperation='destination-out';c.fill();c.restore();}else{c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(x,90,6,0,7);c.fill();}}
+      for(const x of [32,93]){c.fillStyle=palette.deep;c.beginPath();c.arc(x,90,16,0,7);c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(x,90,6,0,7);c.fill();}
     }
     else if(type==='toy'){c.fillStyle=palette.deep;c.beginPath();c.roundRect(7,57,114,36,7);c.fill();c.fillStyle=palette.teal;c.fillRect(11,69,106,17);c.fillStyle=palette.coral;c.fillRect(12,44,55,29);c.fillStyle=palette.yellow;c.fillRect(9,40,61,9);c.beginPath();c.roundRect(72,28,40,49,6);c.fill();c.fillStyle=palette.coral;c.fillRect(69,25,46,9);c.fillStyle=palette.blue;c.fillRect(82,38,26,21);c.fillStyle=palette.cream;c.fillRect(110,69,10,10);for(const x of [33,95]){c.fillStyle=palette.navy;c.beginPath();c.arc(x,89,17,0,7);c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(x,89,7,0,7);c.fill();}}
     else if(type==='pad'||type==='padActive'){c.fillStyle=type==='padActive'?palette.mint:palette.deep;c.beginPath();c.roundRect(6,6,116,116,24);c.fill();c.strokeStyle=palette.cream;c.lineWidth=7;c.stroke();c.strokeStyle=type==='padActive'?palette.teal:palette.yellow;c.lineWidth=3;c.beginPath();c.roundRect(15,15,98,98,16);c.stroke();}
