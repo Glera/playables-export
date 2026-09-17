@@ -1,5 +1,7 @@
 /* Pines Peak / River Workshop, 2026-09-17.
- * v12 stabilizes customer departures, animates payments and uses generated arrow art.
+ * v13 adds a polished factory/house art pass and body/wheel/toy chain.
+ * Currency sequencing, machine collision, planted areas and ending live in river-polish.js.
+ * v12 stabilizes customer departures and introduces generated arrow art.
  * v11 raises purchase-pad artwork above terrain without moving purchase triggers.
  * v10 stabilizes helper waypoint arrival and upright visual turns.
  * v9 restores source depth-tested floor materials on replacement pads.
@@ -9,7 +11,7 @@
  */
 (() => {
   'use strict';
-  const stats = {version:12,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
+  const stats = {version:13,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
   window.riverWorkshop = stats;
   const palette={teal:'#208f98',mint:'#9ce6cb',deep:'#214754',navy:'#284457',yellow:'#ffcc5d',cream:'#f6e8ca',coral:'#e97d58',blue:'#70c9de',dark:'#243b46',white:'#edf9ed',green:'#4f997f'};
   let cc, mainCamera, vertexMaterial, coinMaterial, arrowMaterial, waterMaterial, waterSurface, recoveryText, recoveryFill;
@@ -17,7 +19,7 @@
   const cache=new Map(), processed=new WeakSet(), styled=new WeakSet(), recovered=new WeakSet();
   const watched=new WeakSet(),decorationRoots=new WeakSet(),pending=new Set(),dynamicRoots=new Set(),labels=new Set();
   const origins=new WeakMap(),lawnBottles=new Set(),introLabels=new Set(),introLocations=new Set();
-  const stableHelpers=new WeakSet(),stableCustomers=new WeakSet(),paymentStacks=new WeakSet();
+  const stableHelpers=new WeakSet(),stableCustomers=new WeakSet();
   let lawnIntro;
   const animalCenters=[[3.7,-3.8],[5.2,-5.6],[3.2,3.7]];
   const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
@@ -42,8 +44,17 @@
     }
   }
   function bottle(){const g=geometry();rings(g,0,0,[[0,0],[.025,.15],[.06,.17],[.13,.17],[.16,.155],[.19,.17],[.40,.17],[.43,.155],[.46,.17],[.56,.14],[.64,.067],[.74,.067],[.74,.08],[.81,.08],[.81,0]],['#72c7d1','#b4e8e5','#80d5db','#67b9c8','#beece6','#72cbd3','#e1f3dd','#70c1ce','#b9e6e5','#89d8dd','#5ba9b7','#ffcc5d','#ffcc5d','#ffcc5d']);return g;}
-  function bale(){const g=geometry();box(g,0,0,0,.68,.49,.25,palette.teal);for(const x of [-.22,.22])box(g,x,0,.252,.035,.5,.012,palette.cream);for(let i=0;i<8;i++)box(g,-.26+(i%4)*.17,-.14+Math.floor(i/4)*.25,.267,.10,.07,.018,i%2?palette.blue:palette.mint);return g;}
-  function toyPart(){const g=geometry();box(g,0,0,0,.36,.23,.07,palette.coral);for(const x of [-.095,.095])for(const y of [-.056,.056])rings(g,x,y,[[.07,.04],[.105,.04],[.105,0]],[palette.yellow],8);return g;}
+  function bale(){
+    // Molded truck body: cab, empty windows, open bed and wheel arches.
+    const g=geometry();box(g,0,0,.055,.59,.27,.055,palette.coral);
+    box(g,-.17,0,.11,.23,.27,.07,palette.coral);
+    for(const y of [-.126,.126])box(g,-.13,y,.18,.29,.025,.055,palette.coral);
+    box(g,-.27,0,.18,.028,.27,.055,palette.coral);
+    box(g,.13,0,.11,.25,.27,.10,palette.coral);
+    for(const x of [.025,.235])for(const y of [-.124,.124])box(g,x,y,.21,.032,.032,.09,palette.coral);
+    box(g,.13,0,.30,.28,.29,.025,palette.coral);return g;
+  }
+  function toyPart(){const g=geometry();rings(g,0,0,[[0,0],[0,.10],[.025,.115],[.085,.115],[.11,.095],[.11,.045],[.095,.038],[.095,0]],[palette.navy,palette.navy,palette.deep,palette.navy,palette.yellow,palette.cream,palette.cream],16);return g;}
   function wheel(g,x,y,z){
     const w=geometry();rings(w,0,0,[[-.037,0],[-.037,.077],[.037,.077],[.037,.033],[.041,.033],[.041,0]],[palette.navy,palette.navy,palette.navy,palette.cream,palette.cream],10);
     // Rotate the cylinder onto its axle; one mesh keeps whole toy stacks instanced.
@@ -132,7 +143,8 @@
     const size=['x','y','z'].map(k=>hi[k]-lo[k]);
     // Respect the source 0.30 vertical toy pitch and 0.25 block grid.
     if(role==='toy')size.splice(0,3,.60,.38,.285);
-    if(role==='toyPart')size.splice(0,3,.23,.22,.095);
+    if(role==='toyPart')size.splice(0,3,.22,.22,.105);
+    if(role==='bale')size.splice(0,3,.56,.29,.19);
     if(role==='houseCoin')size.splice(0,3,.40,.40,.048);
     if(role==='tin')size.splice(0,3,.46,.46,.53);
     if(role==='pointer')size[1]=size[0]; // Avoid the thin source arrow's edge-on silhouette.
@@ -147,7 +159,7 @@
     const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];
     for(let i=0;i<g.positions.length;i++) {let a=i%3;min[a]=Math.min(min[a],g.positions[i]);max[a]=Math.max(max[a],g.positions[i]);}
     const extra=role==='bottle'?1.25:role==='pointer'?1.3:1;
-    for(let i=0;i<g.positions.length;i++){const a=i%3,k='xyz'[a],center=a===2&&['toy','toyPart'].includes(role)?lo.z+size[2]/2:(lo[k]+hi[k])/2;g.positions[i]=((g.positions[i]-min[a])/(max[a]-min[a]||1)-.5)*Math.max(size[a],.04)*extra+center;}
+    for(let i=0;i<g.positions.length;i++){const a=i%3,k='xyz'[a],center=a===2&&['toy','toyPart','bale'].includes(role)?lo.z+size[2]/2:(lo[k]+hi[k])/2;g.positions[i]=((g.positions[i]-min[a])/(max[a]-min[a]||1)-.5)*Math.max(size[a],.04)*extra+center;}
     const mesh=cc.utils.createMesh(g,undefined,{calculateBounds:true});mesh.name='RiverWorkshop_'+role;cache.set(key,mesh);return mesh;
   }
   function solid(hex,instanced=true){const key='solid:'+hex+':'+instanced;if(cache.has(key))return cache.get(key);const m=new cc.Material();m.initialize({effectName:'builtin-standard',defines:{USE_ALBEDO_MAP:false,USE_INSTANCING:instanced}});m.setProperty('mainColor',new cc.Color(...rgb(hex).map(x=>Math.round(x*255)),255));m.setProperty('roughness',.8);cache.set(key,m);return m;}
@@ -157,8 +169,12 @@
     c.lineJoin='round';c.lineCap='round';
     if(type==='bottle'){
       c.fillStyle=palette.deep;c.fillRect(49,8,30,18);c.fillStyle=palette.blue;c.beginPath();c.roundRect(35,29,58,91,16);c.fill();c.fillRect(48,22,32,18);c.fillStyle=palette.cream;c.fillRect(36,60,56,30);c.strokeStyle=palette.teal;c.lineWidth=5;c.strokeRect(36,60,56,30);
-    }else if(type==='toyPart'){c.fillStyle=palette.deep;c.fillRect(13,46,102,57);c.fillStyle=palette.coral;c.fillRect(17,40,94,56);for(const x of [38,85]){c.fillStyle=palette.yellow;c.fillRect(x-13,28,26,16);c.beginPath();c.ellipse(x,28,13,6,0,0,7);c.fill();}}
-    else if(type==='bale'){c.fillStyle=palette.deep;c.fillRect(13,27,102,78);c.fillStyle=palette.teal;c.fillRect(17,20,94,75);c.fillStyle=palette.cream;c.fillRect(34,20,10,75);c.fillRect(83,20,10,75);}
+    }else if(type==='toyPart'){c.fillStyle=palette.navy;c.beginPath();c.arc(64,64,51,0,7);c.fill();c.strokeStyle=palette.deep;c.lineWidth=7;for(let i=0;i<12;i++){const a=i*Math.PI/6;c.beginPath();c.moveTo(64+Math.cos(a)*41,64+Math.sin(a)*41);c.lineTo(64+Math.cos(a)*48,64+Math.sin(a)*48);c.stroke();}c.fillStyle=palette.yellow;c.beginPath();c.arc(64,64,26,0,7);c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(64,64,12,0,7);c.fill();
+    }else if(type==='bale'){
+      c.fillStyle=palette.coral;c.beginPath();c.roundRect(11,60,107,30,8);c.fill();c.fillRect(70,31,39,38);c.fillRect(72,24,42,10);
+      c.clearRect(82,36,19,21);c.clearRect(20,57,42,12);c.fillRect(11,49,8,20);c.fillRect(60,49,8,20);
+      for(const x of [32,93]){c.fillStyle=palette.deep;c.beginPath();c.arc(x,90,type==='bale'?12:16,0,7);if(type==='bale'){c.save();c.globalCompositeOperation='destination-out';c.fill();c.restore();}else{c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(x,90,6,0,7);c.fill();}}
+    }
     else if(type==='toy'){c.fillStyle=palette.deep;c.beginPath();c.roundRect(7,57,114,36,7);c.fill();c.fillStyle=palette.teal;c.fillRect(11,69,106,17);c.fillStyle=palette.coral;c.fillRect(12,44,55,29);c.fillStyle=palette.yellow;c.fillRect(9,40,61,9);c.beginPath();c.roundRect(72,28,40,49,6);c.fill();c.fillStyle=palette.coral;c.fillRect(69,25,46,9);c.fillStyle=palette.blue;c.fillRect(82,38,26,21);c.fillStyle=palette.cream;c.fillRect(110,69,10,10);for(const x of [33,95]){c.fillStyle=palette.navy;c.beginPath();c.arc(x,89,17,0,7);c.fill();c.fillStyle=palette.cream;c.beginPath();c.arc(x,89,7,0,7);c.fill();}}
     else if(type==='pad'||type==='padActive'){c.fillStyle=type==='padActive'?palette.mint:palette.deep;c.beginPath();c.roundRect(6,6,116,116,24);c.fill();c.strokeStyle=palette.cream;c.lineWidth=7;c.stroke();c.strokeStyle=type==='padActive'?palette.teal:palette.yellow;c.lineWidth=3;c.beginPath();c.roundRect(15,15,98,98,16);c.stroke();}
     const img=new cc.ImageAsset(canvas),tex=new cc.Texture2D();tex.image=img;const frame=new cc.SpriteFrame();frame.texture=tex;cache.set(key,frame);return frame;
@@ -252,7 +268,7 @@
   }
   function animateNature(){
     const dt=Math.min(cc.director.getDeltaTime(),.05),t=stats.cleanliness;
-    if(mainCamera)for(const pointer of nature.pointers)pointer.setWorldRotation(mainCamera.worldRotation);
+    if(mainCamera)for(const pointer of nature.pointers){pointer.setPosition(0,0,0);pointer.setWorldRotation(mainCamera.worldRotation);const p=pointer.worldPosition.clone(),half=cc.Vec3.transformQuat(new cc.Vec3(),new cc.Vec3(0,.82*pointer.worldScale.y,0),mainCamera.worldRotation);pointer.setWorldPosition(p.x,Math.max(p.y,Math.abs(half.y)+.36),p.z);}
     for(const animal of nature.animals){const visible=t>animal.threshold;if(animal.node.active!==visible)animal.node.active=visible;if(!visible)continue;animal.phase+=dt*.35;const a=animal.phase,center=animalCenters[animal.index];animal.node.setPosition(center[0]+Math.cos(a)*.65,.035,center[1]+Math.sin(a)*.48);animal.node.setRotationFromEuler(0,Math.atan2(-Math.sin(a)*.65,Math.cos(a)*.48)*180/Math.PI,0);if(!animal.walking){animal.anim?.play('walk');animal.walking=true;}}
     for(const can of nature.tins){if(!can.node.activeInHierarchy)continue;can.phase+=dt;can.node.setPosition(Math.sin(can.phase*.38)*.10,Math.cos(can.phase*.31)*.075,Math.sin(can.phase*1.1)*.035);can.node.setRotationFromEuler(Math.sin(can.phase*.8)*7,Math.cos(can.phase*.6)*6,Math.sin(can.phase*.32)*9);}
   }
@@ -371,22 +387,6 @@
       this.node.setWorldRotation(rotation);
     };
   }
-  function animateCustomerPayments(desk){
-    const stack=desk.stackMoneyHigh;if(!stack||paymentStacks.has(stack))return;
-    paymentStacks.add(stack);
-    for(const method of ['addItem','flyToDestroy']){
-      const source=stack[method];
-      stack[method]=function(coin,duration,onArrive){
-        if(coin&&duration===0){
-          // The source payout configured a zero-second flight. Start above the
-          // car body and reuse its real coin, Bezier path and landing callback.
-          const p=coin.worldPosition;coin.setWorldPosition(p.x,p.y+1.25,p.z);
-          duration=.65;stats.paymentFlights++;
-        }
-        return source.call(this,coin,duration,onArrive);
-      };
-    }
-  }
   function processNode(n,path='',observe=false){
     if(decorationRoots.has(n))return;
     stats.visitedNodes++;observe=observe||dynamicRoots.has(n);if(observe)watchNode(n);
@@ -405,7 +405,7 @@
       const type=cc.js.getClassName(c);
       if(type==='Buddy')stabilizeHelper(c);
       if(type==='Customer')stabilizeCustomer(c);
-      if(type==='CashierDesk')animateCustomerPayments(c);
+      // v13 handles all currency transfers through a shared sequencer.
       if(type==='cc.ParticleSystem'&&n.name==='水流'&&!waterMaterial)waterMaterial=c.getMaterialInstance(0);
       // Pooled bottles change only their visible mesh when carried. Keep every
       // inventory object, stack position and pickup/production timing unchanged.
@@ -483,7 +483,7 @@
     coinMaterial=new cc.Material();coinMaterial.initialize({effectName:'builtin-unlit',defines:{USE_TEXTURE:true,USE_VERTEX_COLOR:true,USE_INSTANCING:true}});coinMaterial.setProperty('mainTexture',coinTexture);
     const arrowImage=new Image();arrowImage.src=window.riverGuideArrow;await arrowImage.decode();
     const arrowTexture=new cc.Texture2D();arrowTexture.image=new cc.ImageAsset(arrowImage);
-    arrowMaterial=new cc.Material();arrowMaterial.initialize({effectName:'builtin-unlit',technique:1,defines:{USE_TEXTURE:true,USE_VERTEX_COLOR:true}});arrowMaterial.setProperty('mainTexture',arrowTexture);
+    arrowMaterial=new cc.Material();arrowMaterial.initialize({effectName:'builtin-unlit',defines:{USE_TEXTURE:true,USE_VERTEX_COLOR:true,USE_ALPHA_TEST:true}});arrowMaterial.setProperty('alphaThreshold',.18);arrowMaterial.setProperty('mainTexture',arrowTexture);
     // The source ground guide expects an upward texture. Rotate the imported
     // sprite on its texture canvas; its existing directional controller stays intact.
     const arrowCanvas=document.createElement('canvas');arrowCanvas.width=arrowCanvas.height=256;
@@ -499,7 +499,7 @@
     setInterval(()=>labels.forEach(styleLabel),1000);
     setInterval(recovery,100);
     const syncTitle=()=>{if(title)title.hidden=!!document.getElementById('local-game-end')||!!document.getElementById('radar-brand-loader');};
-    new MutationObserver(syncTitle).observe(document.body,{childList:true});syncTitle();stats.ready=true;
+    new MutationObserver(syncTitle).observe(document.body,{childList:true});syncTitle();stats.ready=true;window.riverSceneTools={nature,cache,solid,spriteArt,addMesh,bareTree,blossoms,geometry,quad,vertexMaterial};
     return true;
   }
   let busy=false;const timer=setInterval(async()=>{if(busy)return;busy=true;try{if(await start())clearInterval(timer);}catch(e){stats.errors.push(e.message);clearInterval(timer);console.error(e);}busy=false;},50);

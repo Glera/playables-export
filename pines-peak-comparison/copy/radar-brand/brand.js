@@ -158,7 +158,7 @@
     const scene = cc?.director?.getScene?.();
     const canvas = document.querySelector('canvas');
     if (
-      armed ||
+      armed || !window.riverWorkshop?.polishReady ||
       scene?.name !== 'Game' ||
       !scene.children?.length ||
       document.getElementById('brand-guard') ||
