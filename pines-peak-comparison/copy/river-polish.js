@@ -1,4 +1,4 @@
-/* v13: source-preserving presentation and explicitly requested transfer timing/collision fixes. */
+/* v15: source-preserving presentation and explicitly requested transfer timing/collision fixes. */
 (() => {
 'use strict';
 let cc,scene,api,stats,clock=0;const flights=[],stackSlots=new WeakMap(),coinSlots=new WeakMap(),patched=new WeakSet();
@@ -8,41 +8,12 @@ const nodes=(root=scene)=>{const list=[];const walk=n=>{list.push(n);n.children.
 const comp=t=>nodes().map(n=>n.getComponent(t)).find(Boolean);
 function frame(texture){const f=new cc.SpriteFrame();f.texture=texture;return f;}
 function texture(canvas){const t=new cc.Texture2D();t.image=new cc.ImageAsset(canvas);return t;}
-function solidArt(tex,alpha=true){const m=new cc.Material();m.initialize({effectName:'builtin-unlit',defines:{USE_TEXTURE:true,USE_ALPHA_TEST:alpha,USE_INSTANCING:true}});m.setProperty('mainTexture',tex);if(alpha)m.setProperty('alphaThreshold',.3);return m;}
-async function loadArt(key){const im=new Image();im.src='./polish-art/'+key+'.png';await im.decode();const c=document.createElement('canvas');c.width=640;c.height=Math.round(640*im.height/im.width);c.getContext('2d').drawImage(im,0,0,c.width,c.height);const t=texture(c);artCache.set(key,{texture:t,material:solidArt(t),aspect:im.height/im.width});return artCache.get(key);}
-function quadMesh(w,h){return cc.utils.createMesh({positions:[-w/2,0,0,w/2,0,0,w/2,h,0,-w/2,h,0],normals:[0,0,1,0,0,1,0,0,1,0,0,1],uvs:[0,1,1,1,1,0,0,0],indices:[0,1,2,0,2,3]},undefined,{calculateBounds:true});}
-function billboard(parent,name,key,x,y,z,width,height){const art=artCache.get(key),n=new cc.Node(name);n.layer=parent.layer;parent.addChild(n);n.setWorldPosition(x,y,z);n.setWorldRotation(comp('CameraMgr').node.worldRotation);n.setWorldScale(1,1,1);const r=n.addComponent('cc.MeshRenderer');r.mesh=quadMesh(width,height||width*art.aspect);r.setSharedMaterial(art.material,0);return n;}
 function setupBuildings(){
  const all=nodes();stats.generatedBuildings=[];
- for(const n of all){
-  const r=n.getComponent('cc.MeshRenderer');if(!r?.mesh)continue;
-  const role=r.mesh.name.replace('RiverWorkshop_','');if(!['shredder','molder','assembly','depot'].includes(role))continue;
-  const p=n.worldPosition.clone(),box=r.model?.worldBounds;
-  const key={shredder:'body-press-v13',molder:'wheel-fitter-v13',assembly:'toy-finisher-v13',depot:'cottage-v13'}[role];
-  const w={shredder:4.6,molder:3.55,assembly:3.2,depot:n.name.endsWith('2')?7:5.4}[role];
-  const front={shredder:1,molder:.9,assembly:.8,depot:1.25}[role];
-  r.enabled=false;const art=role==='shredder'?window.riverFactory3D.build(n,p):billboard(n,'RiverPainted_'+role,key,p.x,Math.max(.07,p.y),p.z+front,w,w*(role==='depot'?.95:.82));
-  // Only the intended source factory animation scales the parent; geometry and
-  // alpha-tested depth stay in world space at rest, with no overlay render layer.
-  stats.generatedBuildings.push({name:n.name,role,width:w,position:[p.x,p.y,p.z],art:role==='shredder'?'first-conveyor.glb revision 2':key});
-  if(role!=='depot'){
-   n.getComponents('cc.Collider').forEach(c=>c.enabled=false);
-   const obstacle=new cc.Node('RiverMachineCollider');scene.addChild(obstacle);obstacle.setWorldPosition(p.x,1,p.z-.15);obstacle.setWorldRotationFromEuler(0,0,0);obstacle.setWorldScale(1,1,1);if(role==='shredder'){obstacle.setWorldPosition(p.x,1.25,p.z);obstacle.setWorldRotation(art.worldRotation);}
-   const c=obstacle.addComponent('cc.BoxCollider');c.size=new cc.Vec3(role==='shredder'?4.05:role==='assembly'?2.3:w*.90,role==='shredder'?2.5:2,role==='shredder'?2.30:role==='assembly'?1.8:2.35);c.isTrigger=false;c.setGroup(1);c.setMask(35011);obstacle.setParent(n,true);
-   stats.machineColliders=(stats.machineColliders||0)+1;
-  }
+ for(const n of all){const r=n.getComponent('cc.MeshRenderer');if(!r?.mesh)continue;const role=r.mesh.name.replace('RiverWorkshop_','');if(!['shredder','molder','assembly','depot'].includes(role))continue;
+  const p=n.worldPosition.clone();r.enabled=false;window.riverFactory3D.build(n,p,role);n.getComponents('cc.Collider').forEach(c=>c.enabled=false);stats.generatedBuildings.push({name:n.name,role,position:[p.x,p.y,p.z],art:'Higgsfield real 3D geometry v15'});
  }
- // The old exterior machine attachments no longer fit the new housing.
  for(const n of all)if(/^SM_JiQi_B_/.test(n.name))n.getComponents('cc.MeshRenderer').forEach(r=>r.enabled=false);
- for(const f of [comp('JiFactory'),comp('JiHeFactory')]){
-  const stack=f.stackMeatHigh,oldFly=stack.fly,oldPop=stack.popItemStack;
-  const x=f===comp('JiFactory')?-8.15:-9.85,z=f===comp('JiFactory')?-6.55:-1.65;
-  f.stackMeatHighParent.setWorldPosition(x,.65,z);
-  stack.getNextAddPosition=()=>new cc.Vec3(x,.65,z);
-  const setVisible=(item,on)=>item?.getComponentsInChildren('cc.MeshRenderer').forEach(r=>r.enabled=on);
-  stack.fly=function(item,adding,changed,duration,arrived){return oldFly.call(this,item,adding,changed,adding?.38:duration,(n)=>{arrived?.(n);if(adding&&this.stackItems.some(a=>a.includes(item)))setVisible(item,false);});};
-  stack.popItemStack=function(){const n=oldPop.call(this);setVisible(n,true);return n;};
- }
 }
 function halfFloat(v){const sign=v&0x8000?-1:1,exponent=(v>>10)&31,fraction=v&1023;return sign*(exponent===0?Math.pow(2,-14)*fraction/1024:Math.pow(2,exponent-15)*(1+fraction/1024));}
 function sampleTriangles(n){const r=n.getComponent('cc.MeshRenderer');if(!r?.mesh)return [];const out=[],mesh=r.mesh,mat=n.worldMatrix;
@@ -66,30 +37,48 @@ function terrain(){
  for(const [key,count,tile] of [['#b4bd87',140,3],['#d9c7a0',110,3]]){const c=document.createElement('canvas');c.width=c.height=128;const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,128,128);let seed=13;const rand=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};for(let i=0;i<count;i++){ctx.fillStyle=i%4?'#e0e3da':'#b1bca5';ctx.beginPath();ctx.ellipse(rand()*128,rand()*128,.5+rand()*1.6,.4+rand()*1.0,0,0,Math.PI*2);ctx.fill();}const tex=texture(c);tex.setWrapMode(cc.TextureBase.WrapMode.REPEAT,cc.TextureBase.WrapMode.REPEAT);const previous=api.solid(key),color=previous.getProperty('mainColor'),m=new cc.Material();m.initialize({effectName:'builtin-unlit',defines:{USE_TEXTURE:true,USE_INSTANCING:true}});m.setProperty('mainTexture',tex);m.setProperty('mainColor',color);m.setProperty('tilingOffset',new cc.Vec4(tile,tile,0,0));api.cache.set('solid:'+key+':true',m);for(const n of all)for(const r of n.getComponents('cc.MeshRenderer'))r.sharedMaterials.forEach((old,i)=>{if(old===previous)r.setSharedMaterial(m,i);});}
 }
 function padFrame(fill){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');g.lineJoin='round';g.fillStyle=fill;g.beginPath();g.roundRect(6,6,244,244,25);g.fill();g.lineWidth=5;g.strokeStyle='#fff4d5';g.setLineDash([13,9]);g.stroke();return frame(texture(c));}
+function schematic(role){
+ const key='scheme:'+role;if(artCache.has(key))return artCache.get(key);const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');g.strokeStyle=g.fillStyle='#ffffff';g.lineWidth=8;g.lineJoin='round';g.lineCap='round';
+ if(role==='bottle'){g.strokeRect(52,9,24,15);g.beginPath();g.moveTo(51,29);g.lineTo(40,42);g.lineTo(40,108);g.quadraticCurveTo(40,118,50,118);g.lineTo(78,118);g.quadraticCurveTo(88,118,88,108);g.lineTo(88,42);g.lineTo(77,29);g.closePath();g.stroke();g.strokeRect(41,65,46,25);}
+ else if(role==='bale'){for(const r of [47,21]){g.beginPath();g.arc(64,64,r,0,Math.PI*2);g.stroke();}for(let i=0;i<8;i++){const a=i*Math.PI/4;g.beginPath();g.moveTo(64+Math.cos(a)*35,64+Math.sin(a)*35);g.lineTo(64+Math.cos(a)*43,64+Math.sin(a)*43);g.stroke();}}
+ else if(role==='houseCoin'){g.beginPath();g.arc(64,64,48,0,Math.PI*2);g.stroke();g.beginPath();g.moveTo(35,62);g.lineTo(64,36);g.lineTo(93,62);g.moveTo(43,57);g.lineTo(43,89);g.lineTo(84,89);g.lineTo(84,57);g.moveTo(58,89);g.lineTo(58,72);g.lineTo(70,72);g.lineTo(70,89);g.stroke();}
+ else {g.beginPath();g.moveTo(13,85);g.lineTo(13,61);g.lineTo(70,61);g.lineTo(70,30);g.lineTo(101,30);g.lineTo(116,62);g.lineTo(116,85);g.closePath();g.stroke();for(const x of [32,96]){g.beginPath();g.arc(x,88,13,0,Math.PI*2);g.fill();}if(role==='toy'){g.strokeRect(79,40,18,16);g.beginPath();g.moveTo(19,59);g.lineTo(19,44);g.lineTo(61,44);g.lineTo(61,59);g.stroke();}}
+ const sf=frame(texture(c));artCache.set(key,sf);return sf;
+}
 function pads(){
- const fill=padFrame('#287b83'),active=padFrame('#87d8bb'),all=nodes(),ctrl=scene.getChildByName('GameMgr').getChildByName('UnlockAreaCtrl');
- for(const root of ctrl.children){const transfer=root.name.endsWith('Trigger'),buy=root.getComponent('WorkerUnlock')||root.getComponent('UnlockMgr');if(!transfer&&!buy)continue;
-  const a=nodes(root),border=a.find(n=>n.name==='frame'&&n.getComponent('cc.Sprite'));
-  if(transfer){const paint=root.getChildByName('RiverPad')?.getComponent('cc.Sprite');if(paint){paint.spriteFrame=fill;const src=border?.getComponent('cc.UITransform');if(src){const u=paint.node.getComponent('cc.UITransform');u.setContentSize(src.width*Math.abs(border.worldScale.x)/Math.abs(paint.node.worldScale.x),src.height*Math.abs(border.worldScale.y)/Math.abs(paint.node.worldScale.y));}const collider=root.getComponent('cc.BoxCollider');if(collider)paint.node.getComponent('cc.UITransform').setContentSize(collider.size.x,collider.size.y);const pp=paint.node.worldPosition;paint.node.setWorldPosition(pp.x,.19,pp.z);if(border)border.getComponent('cc.Sprite').enabled=false;}
-   const input=root.getComponent('YuMiFactoryTrigger');if(input){input.itemSpriteW=fill;input.itemSpriteG=active;input.itemSprite.spriteFrame=fill;}
-  }
-  for(const n of a){const s=n.getComponent('cc.Sprite');if(!s)continue;if(n.name==='back'){s.spriteFrame=fill;s.color=cc.Color.WHITE;}if(n.name==='fill'){s.spriteFrame=active;s.color=cc.Color.WHITE;}if(n.name==='frame')s.enabled=false;
-   if(['back','fill'].includes(n.name)&&border&&n!==border){const b=border.getComponent('cc.UITransform'),u=n.getComponent('cc.UITransform');if(b&&u)u.setContentSize(b.width*Math.abs(border.worldScale.x)/Math.abs(n.worldScale.x),b.height*Math.abs(border.worldScale.y)/Math.abs(n.worldScale.y));}
-   if(/arrow/i.test(n.name)&&s.spriteFrame){const p=n.worldPosition;n.setWorldPosition(p.x,.23,p.z);}
-  }
-  if(transfer){
-   const target= root.getChildByName('RiverPad')||root.getChildByName('meatArea');
-   if(target){
-    let material=target.getComponent('cc.Sprite')?.getRenderMaterial(0)||target.getChildByName('back')?.getComponent('cc.Sprite')?.getRenderMaterial(0);
-    const icon=new cc.Node('RiverPadProduct');icon.layer=root.layer;root.addChild(icon);icon.addComponent('cc.UITransform').setContentSize(.62/Math.abs(root.worldScale.x),.62/Math.abs(root.worldScale.y));const sprite=icon.addComponent('cc.Sprite');sprite.customMaterial=material;
-    const role={YuMiFactoryTrigger:'bottle',canFinishTrigger:'bale',JiFactoryTrigger:'bale',JiFinishTrigger:'toyPart',JiHeFactoryTrigger:'toyPart',JiHeFinishTrigger:'toy',cashierDeskTrigger:'toy',cashierMoneyTrigger:'houseCoin'}[root.name];sprite.spriteFrame=api.spriteArt(role);sprite.sizeMode=0;icon.getComponent('cc.UITransform').setContentSize(.62/Math.abs(root.worldScale.x),.62/Math.abs(root.worldScale.y));icon.setPosition(0,0,0);const p=root.worldPosition;icon.setWorldPosition(p.x,.255,p.z);
-   }
-  }
+ const fill=padFrame('#287b83'),active=padFrame('#70ba9e'),all=nodes(),ctrl=scene.getChildByName('GameMgr').getChildByName('UnlockAreaCtrl'),progress=[];
+ stats.padPresentation=[];stats.removedPadPlatforms=0;for(const n of all)if(/^SM_MuBan(?:-|$)/.test(n.name)){for(const r of n.getComponents('cc.MeshRenderer')){r.enabled=false;stats.removedPadPlatforms++;}}
+ const roles={YuMiFactoryTrigger:'bottle',canFinishTrigger:'bale',JiFactoryTrigger:'bale',JiFinishTrigger:'toyPart',JiHeFactoryTrigger:'toyPart',JiHeFinishTrigger:'toy',cashierDeskTrigger:'toy',cashierMoneyTrigger:'houseCoin'};
+ for(const root of ctrl.children){const transfer=!!roles[root.name],buy=root.getComponent('WorkerUnlock')||root.getComponent('UnlockMgr');if(!transfer&&!buy)continue;
+  const a=nodes(root),sprites=a.map(n=>n.getComponent('cc.Sprite')).filter(Boolean),border=a.find(n=>n.name==='frame'&&n.getComponent('cc.Sprite')),back=a.find(n=>n.name==='back'&&n.getComponent('cc.Sprite')),existing=root.getChildByName('RiverPad');
+  const source=(existing||back||border)?.getComponent('cc.Sprite');if(!source)continue;const mat=source.customMaterial||source.getRenderMaterial(0),reference=border||back||existing,u=reference.getComponent('cc.UITransform');
+  let paint=transfer?existing?.getComponent('cc.Sprite'):back?.getComponent('cc.Sprite');
+  if(!paint){const n=new cc.Node('RiverPad');root.addChild(n);n.layer=root.layer;n.addComponent('cc.UITransform');paint=n.addComponent('cc.Sprite');}
+  const paintNode=paint.node;paint.customMaterial=mat;paint.spriteFrame=fill;paint.type=0;paint.sizeMode=0;paint.enabled=true;paint.color=cc.Color.WHITE;
+  if(transfer){paintNode.setRotationFromEuler(0,0,0);paintNode.setScale(1,1,1);paintNode.setPosition(0,0,0);const collider=root.getComponent('cc.BoxCollider'),scale=Math.max(.001,Math.abs(root.worldScale.x));const width=collider?collider.size.x:u.width*Math.abs(reference.worldScale.x)/scale,height=collider?collider.size.y:u.height*Math.abs(reference.worldScale.y)/scale;paintNode.getComponent('cc.UITransform').setContentSize(width,height);}
+  else paintNode.getComponent('cc.UITransform').setContentSize(u.width*Math.abs(reference.worldScale.x)/Math.max(.001,Math.abs(paintNode.worldScale.x)),u.height*Math.abs(reference.worldScale.y)/Math.max(.001,Math.abs(paintNode.worldScale.y)));
+  const pos=paintNode.worldPosition;paintNode.setWorldPosition(pos.x,.17,pos.z);
+  for(const sprite of sprites)if(sprite!==paint)sprite.enabled=false;
+  const input=root.getComponent('YuMiFactoryTrigger');if(input){input.itemSprite=paint;input.itemSpriteW=fill;input.itemSpriteG=active;}
+  const oldIcon=root.getChildByName('RiverPadProduct');if(oldIcon)oldIcon.destroy();
+  const icon=new cc.Node('RiverPadSchematic');paintNode.addChild(icon);icon.layer=paintNode.layer;const ui=icon.addComponent('cc.UITransform'),size=paintNode.getComponent('cc.UITransform').contentSize;ui.setContentSize(size.width*.34,size.height*.34);const sp=icon.addComponent('cc.Sprite');sp.customMaterial=mat;sp.spriteFrame=schematic(roles[root.name]||'houseCoin');sp.type=0;sp.sizeMode=0;ui.setContentSize(size.width*.34,size.height*.34);icon.setPosition(0,buy?size.height*.10:0,.014/Math.max(.001,Math.abs(paintNode.worldScale.x)));
+  if(buy){progress.push({paint,buy,last:-1});for(const n of a){const label=n.getComponent('cc.Label');if(label){label.color=cc.Color.WHITE;const p=n.worldPosition;n.setWorldPosition(p.x,.21,p.z);}}}
+  stats.padPresentation.push({name:root.name,background:paintNode.name,schematic:roles[root.name]||'houseCoin',legacySpritesDisabled:sprites.filter(s=>s!==paint).length});
  }
- // The moving ground arrow is updated by its controller, so offset its visible
- // child, never its navigation root or an overlay material.
- for(const n of all){const s=n.getComponent('cc.Sprite');if(s?.riverRole==='chevron'&&!path(n).includes('UnlockAreaCtrl')){const p=n.worldPosition;n.setWorldPosition(p.x,Math.max(.24,p.y),p.z);}}
+ // Payment progresses by tint on the same plane, with no stacked fill rectangle.
+ cc.director.on(cc.Director.EVENT_BEFORE_UPDATE,()=>{for(const p of progress){const v=p.buy.fillProgressSp?.fillRange??p.buy.progressSprite?.fillRange??0;if(v===p.last)continue;p.last=v;p.paint.color=new cc.Color(255,255,255,255);p.paint.spriteFrame=v>0?active:fill;}});
  const desk=comp('CashierDesk'),p=desk.moneyStackParent.worldPosition;desk.moneyStackParent.setWorldPosition(p.x,.25,p.z);
+}
+function stableArrows(){
+ const guide=comp('ArrowGuide'),old=guide.guideToTarget;let angle=null,target=null,near=false;
+ stats.arrowStability={mode:'camera facing after animation; shortest-path ground turns with arrival dead zone',maxTurnPerFrame:0};
+ guide.guideToTarget=function(node){old.call(this,node);const p=this.playerNode.worldPosition,q=node.worldPosition,d=Math.hypot(q.x-p.x,q.z-p.z),goal=-Math.atan2(q.z-p.z,q.x-p.x)*180/Math.PI;
+  if(node!==target||angle===null){target=node;angle=goal;near=d<1.4;}
+  if(near?d>1.9:d<1.4)near=!near;
+  const delta=((goal-angle+540)%360)-180,step=Math.max(-240*cc.director.getDeltaTime(),Math.min(240*cc.director.getDeltaTime(),delta));
+  if(!near){angle+=step;stats.arrowStability.maxTurnPerFrame=Math.max(stats.arrowStability.maxTurnPerFrame,Math.abs(step));}
+  this.node.setRotationFromEuler(0,angle,0);for(const arrow of this.childArrow)arrow.active=!near;
+ };
 }
 function reserve(stack,coin,kind){let slots=stackSlots.get(stack);if(!slots){slots=new Map();stackSlots.set(stack,slots);}let i=0;while(slots.has(i))i++;slots.set(i,coin);coinSlots.set(coin,{slots,i});const columns=kind==='cash'?4:1,col=i%columns,row=Math.floor(i/columns);return kind==='cash'?new cc.Vec3((col%2-.5)*.40,row*.075,(Math.floor(col/2)-.5)*.40):new cc.Vec3(0,row*stack.stackHeight,0);}
 function release(coin){const x=coinSlots.get(coin);if(x){x.slots.delete(x.i);coinSlots.delete(coin);}}
@@ -113,12 +102,13 @@ function moneyStack(stack,kind){if(!stack||patched.has(stack))return;patched.add
  if(kind==='cash'){const oldDestroy=stack.flyToDestroy;stack.flyToDestroy=function(coin,duration,done){const p=coin.worldPosition;coin.setWorldPosition(p.x,1.3,p.z);enqueue(coin,()=>this.center.worldPosition.clone().add(new cc.Vec3(0,.1,0)),()=>oldDestroy.call(this,coin,.001,done),'cash');};}
 }
 function transfers(){stats.coinTransfers={queued:0,started:0,landed:0,duration:flightDuration,interval:flightGap};moneyStack(comp('CashierDesk').stackMoneyHigh,'cash');moneyStack(comp('Player').stackMoneyHight,'carry');comp('CashierDesk')._coinFlyIntervalTime=flightGap;
- for(const n of nodes()){const w=n.getComponent('WorkerUnlock');if(w){const update=w.update;let elapsed=0;w.update=function(dt){elapsed+=dt;if(elapsed<flightGap)return;const t=elapsed;elapsed=0;return update.call(this,t);};}const u=n.getComponent('UnlockMgr');if(u)u._time=Math.max(u._time,flightGap);}
+ for(const n of nodes()){const w=n.getComponent('WorkerUnlock');if(w){const update=w.update;let elapsed=0;w.update=function(dt){elapsed+=dt;if(elapsed<flightGap)return;const t=elapsed;elapsed=0;return update.call(this,t);};}const u=n.getComponent('UnlockMgr');if(u){u._time=Math.max(u._time,flightGap);
+   // Source needNum counts currency units, but every real coin pays ten.
+   // Reserve the number of coins at launch so delayed arrivals cannot overspend.
+   const quota=()=>{for(const row of u.unlockItemArray)if(row.dataKey==='money')row.needNum=Math.min(row.needNum,Math.ceil(Math.max(0,row.targetItemNum-row.itemNum)/10));};
+   const reset=u.ResetTargetScore;u.ResetTargetScore=function(...args){const result=reset.apply(this,args);quota();return result;};quota();
+  }}
  cc.director.on(cc.Director.EVENT_BEFORE_UPDATE,()=>flyFrame(cc.director.getDeltaTime()));
-}
-function particles(){const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');g.fillStyle='#8ae8e0';g.beginPath();g.moveTo(32,2);g.lineTo(40,24);g.lineTo(62,32);g.lineTo(40,40);g.lineTo(32,62);g.lineTo(24,40);g.lineTo(2,32);g.lineTo(24,24);g.fill();const tex=texture(c),seen=new WeakSet();
- const style=n=>{for(const p of n.getComponentsInChildren('cc.ParticleSystem')){if(seen.has(p))continue;if(/yezi|叶子/i.test(path(p.node))||p.sharedMaterials?.some(m=>/yezi/i.test(m?.name||''))){seen.add(p);if(p.renderer)p.renderer.renderMode=0;if(p.startSize){p.startSize.mode=0;p.startSize.constant=.16;}if(p.startLifetime){p.startLifetime.mode=0;p.startLifetime.constant=.4;}for(let i=0;i<p.sharedMaterials.length;i++){const m=p.getMaterialInstance(i);if(m?.effectAsset){m.setProperty('mainTexture',tex);m.setProperty('tintColor',new cc.Color(124,241,226,255));}}stats.replacedLeafEffects=(stats.replacedLeafEffects||0)+1;}}};
- style(scene);const effect=comp('EffectMgr').effectRoot;effect.on(cc.Node.EventType.CHILD_ADDED,style);
 }
 function restoration(){
  const source=nodes().find(n=>n.name==='ring_1'&&path(n).includes('FX_Levelup_001'))?.getComponent('cc.ParticleSystem');
@@ -137,6 +127,6 @@ async function ending(){
   }catch(e){stats.errors.push('End animation: '+e.message);end.querySelector('.pp-brand-hero')?.style.setProperty('display','block');}
  };new MutationObserver(show).observe(document.body,{childList:true,subtree:true});show();
 }
-async function start(){cc=window.cclegacy||window.cc;stats=window.riverWorkshop;api=window.riverSceneTools;if(!stats?.ready||!api)return false;scene=cc.director.getScene();await Promise.all(['body-press-v13','wheel-fitter-v13','toy-finisher-v13','cottage-v13'].map(loadArt));await window.riverFactory3D.prepare(cc,api,scene);setupBuildings();terrain();pads();transfers();particles();restoration();ending();stats.polishReady=true;return true;}
+async function start(){cc=window.cclegacy||window.cc;stats=window.riverWorkshop;api=window.riverSceneTools;if(!stats?.ready||!api)return false;scene=cc.director.getScene();await window.riverFactory3D.prepare(cc,api,scene);setupBuildings();terrain();pads();transfers();stableArrows();restoration();ending();stats.polishReady=true;return true;}
 let busy=false;const timer=setInterval(async()=>{if(busy)return;busy=true;try{if(await start())clearInterval(timer);}catch(e){clearInterval(timer);(window.riverWorkshop?.errors||[]).push('Polish: '+e.message);console.error(e);}busy=false;},50);
 })();

@@ -11,7 +11,7 @@
  */
 (() => {
   'use strict';
-  const stats = {version:14,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
+  const stats = {version:15,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
   window.riverWorkshop = stats;
   const palette={teal:'#208f98',mint:'#9ce6cb',deep:'#214754',navy:'#284457',yellow:'#ffcc5d',cream:'#f6e8ca',coral:'#e97d58',blue:'#70c9de',dark:'#243b46',white:'#edf9ed',green:'#4f997f'};
   let cc, mainCamera, vertexMaterial, coinMaterial, arrowMaterial, waterMaterial, waterSurface, recoveryText, recoveryFill;
@@ -138,7 +138,8 @@
   function mapMesh(source,role){
     if(source.name==='RiverWorkshop_'+role)return source;
     const key=source.uuid+':'+role;if(cache.has(key))return cache.get(key);
-    let g=({bottle,bottleStack:bottle,bale,toyPart,toy,tin,tinRiver:tin,houseCoin,pine,bin,depot,pointer}[role]||(()=>machine(role)))();
+    let g=window.riverProductGeometry?.[role]||({bottle,bottleStack:bottle,bale,toyPart,toy,tin,tinRiver:tin,houseCoin,pine,bin,depot,pointer}[role]||(()=>machine(role)))();
+    if(window.riverProductGeometry?.[role])g=Object.fromEntries(Object.entries(g).map(([k,v])=>[k,[...v]]));
     // Models use Z-up; floating corn has its long axis in Y, horizontal corn in X.
     const lo=source.struct.minPosition,hi=source.struct.maxPosition;
     const size=['x','y','z'].map(k=>hi[k]-lo[k]);
@@ -266,10 +267,14 @@
     }
     stats.nature={trees:nature.trees.length,flowerPatches:nature.flowers.length,animals:nature.animals.length,visibleTrees:0,visibleFlowers:0,visibleAnimals:0};
     cc.director.on(cc.Director.EVENT_BEFORE_UPDATE,animateNature);
+    cc.director.on(cc.Director.EVENT_BEFORE_DRAW,()=>{
+      if(!mainCamera)return;
+      for(const pointer of nature.pointers){if(!pointer.activeInHierarchy)continue;pointer.setPosition(0,0,0);pointer.setWorldRotation(mainCamera.worldRotation);const p=pointer.worldPosition,half=cc.Vec3.transformQuat(new cc.Vec3(),new cc.Vec3(0,.82*pointer.worldScale.y,0),mainCamera.worldRotation);pointer.setWorldPosition(p.x,Math.max(p.y,Math.abs(half.y)+.36),p.z);}
+    });
   }
   function animateNature(){
     const dt=Math.min(cc.director.getDeltaTime(),.05),t=stats.cleanliness;
-    if(mainCamera)for(const pointer of nature.pointers){pointer.setPosition(0,0,0);pointer.setWorldRotation(mainCamera.worldRotation);const p=pointer.worldPosition.clone(),half=cc.Vec3.transformQuat(new cc.Vec3(),new cc.Vec3(0,.82*pointer.worldScale.y,0),mainCamera.worldRotation);pointer.setWorldPosition(p.x,Math.max(p.y,Math.abs(half.y)+.36),p.z);}
+
     for(const animal of nature.animals){const visible=t>animal.threshold;if(animal.node.active!==visible)animal.node.active=visible;if(!visible)continue;animal.phase+=dt*.35;const a=animal.phase,center=animalCenters[animal.index];animal.node.setPosition(center[0]+Math.cos(a)*.65,.035,center[1]+Math.sin(a)*.48);animal.node.setRotationFromEuler(0,Math.atan2(-Math.sin(a)*.65,Math.cos(a)*.48)*180/Math.PI,0);if(!animal.walking){animal.anim?.play('walk');animal.walking=true;}}
     for(const can of nature.tins){if(!can.node.activeInHierarchy)continue;can.phase+=dt;can.node.setPosition(Math.sin(can.phase*.38)*.10,Math.cos(can.phase*.31)*.075,Math.sin(can.phase*1.1)*.035);can.node.setRotationFromEuler(Math.sin(can.phase*.8)*7,Math.cos(can.phase*.6)*6,Math.sin(can.phase*.32)*9);}
   }
@@ -494,6 +499,7 @@
     // Static environment is styled once, including inactive upgrade variants.
     // Only runtime inventory, factories and UI create/reparent objects later.
     for(const name of ['GameMgr','GlobalData','UICanvas']){const root=scene.getChildByName(name);if(root)dynamicRoots.add(root);}
+    await window.riverFactory3D.loadData();
     setupLawnIntro(scene);processNode(scene);liftZones(scene);createNature(scene);recovery();
     cc.director.on(cc.Director.EVENT_AFTER_UPDATE,flushChanges);
     // Only localization can reset an existing label without a node event.
