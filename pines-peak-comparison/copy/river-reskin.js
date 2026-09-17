@@ -1,4 +1,5 @@
 /* Pines Peak / River Workshop, 2026-09-17.
+ * v12 stabilizes customer departures, animates payments and uses generated arrow art.
  * v11 raises purchase-pad artwork above terrain without moving purchase triggers.
  * v10 stabilizes helper waypoint arrival and upright visual turns.
  * v9 restores source depth-tested floor materials on replacement pads.
@@ -8,15 +9,15 @@
  */
 (() => {
   'use strict';
-  const stats = {version:11,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,incrementalFlushes:0,visitedNodes:0};
+  const stats = {version:12,meshes:0,sprites:0,labels:0,materials:0,errors:[],roles:{},bottlesRecovered:0,lawnRecovered:0,riverRecovered:0,lawnGoal:8,riverGoal:56,cleanupStage:'lawn',grassCleanliness:0,cleanliness:0,stableHelpers:0,stableCustomers:0,paymentFlights:0,incrementalFlushes:0,visitedNodes:0};
   window.riverWorkshop = stats;
   const palette={teal:'#208f98',mint:'#9ce6cb',deep:'#214754',navy:'#284457',yellow:'#ffcc5d',cream:'#f6e8ca',coral:'#e97d58',blue:'#70c9de',dark:'#243b46',white:'#edf9ed',green:'#4f997f'};
-  let cc, mainCamera, vertexMaterial, coinMaterial, waterMaterial, waterSurface, recoveryText, recoveryFill;
+  let cc, mainCamera, vertexMaterial, coinMaterial, arrowMaterial, waterMaterial, waterSurface, recoveryText, recoveryFill;
   const nature={trees:[],flowers:[],animals:[],pads:[],pointers:[],tins:[]}, bottleSources=new WeakMap();
   const cache=new Map(), processed=new WeakSet(), styled=new WeakSet(), recovered=new WeakSet();
   const watched=new WeakSet(),decorationRoots=new WeakSet(),pending=new Set(),dynamicRoots=new Set(),labels=new Set();
   const origins=new WeakMap(),lawnBottles=new Set(),introLabels=new Set(),introLocations=new Set();
-  const stableHelpers=new WeakSet();
+  const stableHelpers=new WeakSet(),stableCustomers=new WeakSet(),paymentStacks=new WeakSet();
   let lawnIntro;
   const animalCenters=[[3.7,-3.8],[5.2,-5.6],[3.2,3.7]];
   const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
@@ -76,22 +77,16 @@
     return g;
   }
   function pointer(){
-    const g=geometry();
-    const shape=(width,bottom,top,neck,shaft,z,color)=>{
-      tri(g,[-width,neck,z],[0,bottom,z],[width,neck,z],color);
-      quad(g,[-shaft,neck,z],[shaft,neck,z],[shaft,top,z],[-shaft,top,z],color);
-    };
-    shape(.58,-.77,.77,-.02,.23,0,palette.deep);
-    shape(.46,-.61,.67,.02,.145,.012,palette.cream);
-    shape(.30,-.45,.54,.065,.085,.024,palette.coral);
-    return g;
+    // A textured quad carries the generated RGBA art; no drawn arrow geometry.
+    const g=geometry();quad(g,[-.82,-.82,0],[.82,-.82,0],[.82,.82,0],[-.82,.82,0],'#ffffff');
+    g.uvs=[0,1,1,1,1,0,0,1,1,0,0,0];return g;
   }
   function addPointer(source,renderer){
     // Keep the target and bobbing animation. A separate visible arrow faces
     // the camera, so it never collapses to a thin edge during the source spin.
     renderer.enabled=false;const node=new cc.Node('RiverPointerFace');node.layer=source.layer;source.addChild(node);node.setScale(2,2,2);
     let mesh=cache.get('pointerFace');if(!mesh){mesh=cc.utils.createMesh(pointer(),undefined,{calculateBounds:true});mesh.name='RiverWorkshop_pointerFace';cache.set('pointerFace',mesh);}
-    const r=node.addComponent('cc.MeshRenderer');r.mesh=mesh;r.setSharedMaterial(vertexMaterial,0);processed.add(r);nature.pointers.push(node);stats.roles.pointer=(stats.roles.pointer||0)+1;stats.meshes++;
+    const r=node.addComponent('cc.MeshRenderer');r.mesh=mesh;r.setSharedMaterial(arrowMaterial,0);processed.add(r);nature.pointers.push(node);stats.roles.pointer=(stats.roles.pointer||0)+1;stats.meshes++;
   }
   function ellipsoid(g,x,y,z,rx,ry,rz,color){
     const segments=8,rows=5,p=(i,j)=>{const a=i/segments*Math.PI*2,b=j/rows*Math.PI;return[x+Math.cos(a)*Math.sin(b)*rx,y+Math.sin(a)*Math.sin(b)*ry,z+Math.cos(b)*rz];};
@@ -160,9 +155,7 @@
     const key='sprite:'+type;if(cache.has(key))return cache.get(key);
     const canvas=document.createElement('canvas');canvas.width=canvas.height=128;const c=canvas.getContext('2d');
     c.lineJoin='round';c.lineCap='round';
-    if(type==='chevron'){
-      c.beginPath();c.moveTo(64,8);c.lineTo(111,56);c.lineTo(85,56);c.lineTo(85,115);c.lineTo(43,115);c.lineTo(43,56);c.lineTo(17,56);c.closePath();c.fillStyle=palette.coral;c.strokeStyle=palette.deep;c.lineWidth=10;c.fill();c.stroke();
-    }else if(type==='bottle'){
+    if(type==='bottle'){
       c.fillStyle=palette.deep;c.fillRect(49,8,30,18);c.fillStyle=palette.blue;c.beginPath();c.roundRect(35,29,58,91,16);c.fill();c.fillRect(48,22,32,18);c.fillStyle=palette.cream;c.fillRect(36,60,56,30);c.strokeStyle=palette.teal;c.lineWidth=5;c.strokeRect(36,60,56,30);
     }else if(type==='toyPart'){c.fillStyle=palette.deep;c.fillRect(13,46,102,57);c.fillStyle=palette.coral;c.fillRect(17,40,94,56);for(const x of [38,85]){c.fillStyle=palette.yellow;c.fillRect(x-13,28,26,16);c.beginPath();c.ellipse(x,28,13,6,0,0,7);c.fill();}}
     else if(type==='bale'){c.fillStyle=palette.deep;c.fillRect(13,27,102,78);c.fillStyle=palette.teal;c.fillRect(17,20,94,75);c.fillStyle=palette.cream;c.fillRect(34,20,10,75);c.fillRect(83,20,10,75);}
@@ -354,6 +347,46 @@
       this.node.setWorldRotation(rotation);
     };
   }
+  function stabilizeCustomer(customer){
+    if(stableCustomers.has(customer))return;
+    const mover=customer.node.getComponent('NPCPathMove3D');if(!mover)return;
+    stableCustomers.add(customer);stats.stableCustomers++;
+    const sourceStep=mover.logicUpdate;
+    const direction=new cc.Vec3(),previous=new cc.Quat(),target=new cc.Quat(),rotation=new cc.Quat();
+    mover.logicUpdate=function(dt){
+      const point=this.pathPoints?.[this.currentIndex];
+      if(!this._inited||this._bPause||!point||!(dt>0))return sourceStep.call(this,dt);
+      cc.Vec3.subtract(direction,point.worldPosition,this.node.worldPosition);
+      const distance=direction.length(),horizontal=Math.hypot(direction.x,direction.z);
+      cc.Quat.copy(previous,this.node.worldRotation);
+      // Preserve speed, path order, elevation and arrival callbacks. Never step
+      // past the target: at low FPS that creates an endless back-and-forth loop.
+      sourceStep.call(this,this.speed>0?Math.min(dt,distance/this.speed):dt);
+      if(horizontal<.1)return;
+      direction.y=0;direction.normalize();cc.Quat.fromViewUp(target,direction,cc.Vec3.UP);
+      cc.Quat.normalize(previous,previous);cc.Quat.normalize(target,target);
+      const angle=2*Math.acos(Math.min(1,Math.abs(cc.Quat.dot(previous,target))));
+      const limit=Math.min(dt,.05)*Math.PI*2;
+      cc.Quat.slerp(rotation,previous,target,angle>1e-6?Math.min(1,limit/angle):1);
+      this.node.setWorldRotation(rotation);
+    };
+  }
+  function animateCustomerPayments(desk){
+    const stack=desk.stackMoneyHigh;if(!stack||paymentStacks.has(stack))return;
+    paymentStacks.add(stack);
+    for(const method of ['addItem','flyToDestroy']){
+      const source=stack[method];
+      stack[method]=function(coin,duration,onArrive){
+        if(coin&&duration===0){
+          // The source payout configured a zero-second flight. Start above the
+          // car body and reuse its real coin, Bezier path and landing callback.
+          const p=coin.worldPosition;coin.setWorldPosition(p.x,p.y+1.25,p.z);
+          duration=.65;stats.paymentFlights++;
+        }
+        return source.call(this,coin,duration,onArrive);
+      };
+    }
+  }
   function processNode(n,path='',observe=false){
     if(decorationRoots.has(n))return;
     stats.visitedNodes++;observe=observe||dynamicRoots.has(n);if(observe)watchNode(n);
@@ -371,6 +404,8 @@
     for(const c of n.components||[]){
       const type=cc.js.getClassName(c);
       if(type==='Buddy')stabilizeHelper(c);
+      if(type==='Customer')stabilizeCustomer(c);
+      if(type==='CashierDesk')animateCustomerPayments(c);
       if(type==='cc.ParticleSystem'&&n.name==='水流'&&!waterMaterial)waterMaterial=c.getMaterialInstance(0);
       // Pooled bottles change only their visible mesh when carried. Keep every
       // inventory object, stack position and pickup/production timing unchanged.
@@ -446,6 +481,15 @@
     const coinImage=new Image();coinImage.src=window.riverHouseCoin;await coinImage.decode();
     const coinTexture=new cc.Texture2D();coinTexture.image=new cc.ImageAsset(coinImage);const coinFrame=new cc.SpriteFrame();coinFrame.texture=coinTexture;cache.set('sprite:houseCoin',coinFrame);
     coinMaterial=new cc.Material();coinMaterial.initialize({effectName:'builtin-unlit',defines:{USE_TEXTURE:true,USE_VERTEX_COLOR:true,USE_INSTANCING:true}});coinMaterial.setProperty('mainTexture',coinTexture);
+    const arrowImage=new Image();arrowImage.src=window.riverGuideArrow;await arrowImage.decode();
+    const arrowTexture=new cc.Texture2D();arrowTexture.image=new cc.ImageAsset(arrowImage);
+    arrowMaterial=new cc.Material();arrowMaterial.initialize({effectName:'builtin-unlit',technique:1,defines:{USE_TEXTURE:true,USE_VERTEX_COLOR:true}});arrowMaterial.setProperty('mainTexture',arrowTexture);
+    // The source ground guide expects an upward texture. Rotate the imported
+    // sprite on its texture canvas; its existing directional controller stays intact.
+    const arrowCanvas=document.createElement('canvas');arrowCanvas.width=arrowCanvas.height=256;
+    const arrowContext=arrowCanvas.getContext('2d');arrowContext.translate(128,128);arrowContext.rotate(Math.PI);arrowContext.drawImage(arrowImage,-128,-128,256,256);
+    const groundTexture=new cc.Texture2D();groundTexture.image=new cc.ImageAsset(arrowCanvas);
+    const groundArrow=new cc.SpriteFrame();groundArrow.texture=groundTexture;cache.set('sprite:chevron',groundArrow);
     // Static environment is styled once, including inactive upgrade variants.
     // Only runtime inventory, factories and UI create/reparent objects later.
     for(const name of ['GameMgr','GlobalData','UICanvas']){const root=scene.getChildByName(name);if(root)dynamicRoots.add(root);}
