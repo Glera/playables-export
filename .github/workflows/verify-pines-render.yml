@@ -27,11 +27,13 @@ jobs:
           for attempt in range(1,7):
               try:
                   for name in files:
-                      req=urllib.request.Request(url+name,headers={'Cache-Control':'no-cache','User-Agent':'PinesPeak-Deployment-Check'})
+                      req=urllib.request.Request(url+name+'?verify='+os.environ['GITHUB_SHA']+'&attempt='+str(attempt),headers={'Cache-Control':'no-cache','User-Agent':'PinesPeak-Deployment-Check'})
                       with urllib.request.urlopen(req,timeout=15) as response:
                           body=response.read()
                           assert response.status==200
-                      assert hashlib.sha256(body).digest()==hashlib.sha256((root/name).read_bytes()).digest(), 'Deployed file mismatch: '+name
+                      actual=hashlib.sha256(body).hexdigest()
+                      expected=hashlib.sha256((root/name).read_bytes()).hexdigest()
+                      assert actual==expected, 'Deployed file mismatch: '+name+' expected='+expected+' actual='+actual
                   print('VERIFIED_URL='+url,flush=True)
                   with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as summary:
                       summary.write('Verified live Render comparison: '+url+'\n\nAll copy assets and comparison entry points match the committed bytes.\n')
