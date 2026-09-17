@@ -1,0 +1,43 @@
+name: Verify Pines Peak on Render
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'pines-peak-comparison/**'
+      - '.github/workflows/verify-pines-render.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify deployed comparison matches this commit
+        env:
+          RENDER_COMPARISON_URL: https://playables-export.onrender.com/pines-peak-comparison/
+        run: |
+          python3 - <<'PY'
+          import os, time, hashlib, urllib.request
+          from pathlib import Path
+          root=Path('pines-peak-comparison')
+          url=os.environ['RENDER_COMPARISON_URL']
+          files=['index.html','copy/index.html','copy/river-reskin.js','original/index.html']
+          for attempt in range(1,7):
+              try:
+                  for name in files:
+                      req=urllib.request.Request(url+name,headers={'Cache-Control':'no-cache','User-Agent':'PinesPeak-Deployment-Check'})
+                      with urllib.request.urlopen(req,timeout=15) as response:
+                          body=response.read()
+                          assert response.status==200
+                      assert hashlib.sha256(body).digest()==hashlib.sha256((root/name).read_bytes()).digest(), 'Deployed file mismatch: '+name
+                  print('VERIFIED_URL='+url,flush=True)
+                  with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as summary:
+                      summary.write('Verified live Render comparison: '+url+'\n\nAll four entry points match the committed bytes.\n')
+                  break
+              except Exception as error:
+                  print('Attempt',attempt,type(error).__name__,str(error)[:240],flush=True)
+                  if attempt==6: raise
+                  time.sleep(15)
+          PY
