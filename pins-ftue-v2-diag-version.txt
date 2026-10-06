@@ -1,3 +1,3 @@
-pins-ftue-v2-diag-classic_l1.html: playables@2bc8b6d, built 2026-10-06 11:24 UTC (iOS <= 16 frame gate: no drawImage/texImage2D from a clip until rVFC presented a frame; lazy ceremony sources + loop-stall watchdog; breadcrumbs); other diag copies: playables@c5921c2
+pins-ftue-v2-diag-classic_l1.html: playables@8a65ebc (clean worktree build), built 2026-10-06 13:12 UTC (iOS <= 16: video sources stay data: URLs — blob: media decodes no frame on iOS 16.7; frame gate; lazy ceremony sources + loop-stall watchdog; breadcrumbs); other diag copies: playables@c5921c2
 
 pins-ftue-v2-diag-media.html: standalone media probe (6 bare <video> tiles: ref CB 320x240 / real bg via blob, data:, http / real chars / bg re-encoded CB gop12; drawImage + texImage2D probes), built 2026-10-06 10:2x UTC, sha256 49359b9ea6fa…; sibling pins-ftue-v2-diag-media-bg.mp4 = concepts/pins/source/Stage_1_bg.mp4 (sha256 c30c486849c6…)
