@@ -1,3 +1,4 @@
+classic_l1, greenhouse_l1, wintercabin_l3 (+ diag copies of classic_l1, greenhouse_l1): playables@aecbd06 (clean worktree build; operator level saves on the same code as c756f55), built 2026-10-06 18:49 UTC
 pins-ftue-v2-diag-*.html (6 copies) and the 18 test levels pins-ftue-v2-<key>.html: playables@c756f55 (clean worktree build), built 2026-10-06 14:01 UTC (iOS <= 16: video sources stay data: URLs — blob: media decodes no frame on iOS 16.7; frame gate; lazy ceremony sources + loop-stall watchdog; breadcrumbs). All diag copies and levels from the same build.
 
 pins-ftue-v2-diag-media.html: standalone media probe (6 bare <video> tiles: ref CB 320x240 / real bg via blob, data:, http / real chars / bg re-encoded CB gop12; drawImage + texImage2D probes), built 2026-10-06 10:2x UTC, sha256 49359b9ea6fa…; sibling pins-ftue-v2-diag-media-bg.mp4 = concepts/pins/source/Stage_1_bg.mp4 (sha256 c30c486849c6…)
