@@ -1,1 +1,1 @@
-pins-ftue-v2-diag-classic_l1.html: playables@1745354, built 2026-10-06 08:26 UTC (lazy ceremony sources + loop-stall watchdog on iOS <= 16, breadcrumbs); other diag copies: playables@c5921c2
+pins-ftue-v2-diag-classic_l1.html: playables@dea6e62, built 2026-10-06 09:32 UTC (breadcrumbs via worker+IndexedDB / history.state / window.name; lazy ceremony sources + loop-stall watchdog on iOS <= 16); other diag copies: playables@c5921c2
