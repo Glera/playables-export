@@ -1,0 +1,52 @@
+{
+  "round": "round3-prostokvashino",
+  "mode": "built-in image_gen",
+  "generatedAt": "2026-10-21",
+  "assets": [
+    {
+      "file": "home.png",
+      "size": {
+        "width": 841,
+        "height": 1870
+      },
+      "sha256": "b7a40b3f4b3e692d32e8812102d8291a8be4b91f5c03f081917027cd77c2ae1f",
+      "source": "Generated image source; internal path omitted",
+      "references": [
+        "reference/S101_failure_home_loaded.png",
+        "previous/home.png"
+      ],
+      "referenceRoles": [
+        "Structure only",
+        "Art style only"
+      ],
+      "prompt": "Use case: ui-mockup.\nAsset type: a finished, hand-painted mobile casual puzzle HOME screen, portrait exactly 9:20 aspect ratio, 1080 x 2400 pixels requested.\nPrimary request: Refine the selected Prostokvashino game. Keep the warm blue-wood veranda and recognizable classic Soviet Matroskin from image 2, but FOLLOW the screen STRUCTURE and proportional placement of image 1 very closely. This is an art reskin of that familiar structure, not a new UX. Render a fresh polished playable-looking commercial mobile game screenshot, not a wireframe, no device frame.\n\nINPUT ROLES:\nImage 1 is STRUCTURE ONLY: original reference screenshot. Copy the layout proportions, the compact resource bar, single level button, five-slot footer; do not copy its characters, red palette, desert, car, wording, logos or any original pixels.\nImage 2 is ART STYLE ONLY: selected approved Prostokvashino art. Keep its warm sunlight, blue painted wood, cream enamel with blue rims, dark navy lettering, classic gray striped Matroskin, cottage veranda, tea mug. Ignore its UI arrangement entirely: it has an incorrect huge title board, chest progression, events and four tabs which MUST NOT appear here.\n\nComposition/geometry as normalized screen fractions:\n- Full bleed 9:20. Compact single horizontal top resource strip from y .045 to .11. A circular profile portrait of Matroskin overlaps its far LEFT at x .025-.23, y .025-.13. The strip carries red heart and 5 with small 'Полно', then gold coin and 1250, plus small green '+' badges, circular gear at far right. All items are joined visually as one cream-enamel bar on blue painted wood. This is NOT two large separated bars. Keep breathing room immediately below.\n- Main world art in y .13-.80: wide inviting sunny veranda, blue painted posts/railings, distant village house and garden, classic Matroskin sitting relaxed at a table with a cream blue-flower tea mug. His body and face broadly centered in lower half, roughly analogous to main characters' visual area in image1; open sunny vista above him. Rich painted illustration, restrained decorative density, coherent warm light. Cat is obviously Matroskin with long whiskers, heavy gray stripes, gray cheeks, pointed ears and distinctive amused expression; not a generic orange cat.\n- SINGLE PRIMARY green enamel button at x .265-.735, y .81-.885, with single-line large cream Cyrillic label 'Уровень 12'. No separate 'Играть' text. Compact proportions like image1, not a huge bottom slab.\n- Bottom nav flush full width at y .915-1.00. FIVE equally spaced functional slots: icon-only SHOP (small storefront), CARDS (two playing cards), HOME raised CENTER (house inside round cream-blue rim, with exact label 'Дом' below), TEAM (three round silhouettes), RANKING (trophy). Fifth slot must exist. Blue painted wood band, cream separators, cream enamel circular icon buttons with blue outlines. Central Home selected cell slightly lighter and circle rises above band. No labels under inactive slots. These functional meanings must match image1.\n- No UI in the central artwork except that single level CTA. Scene visible behind.\n\nTypography: crisp legible high quality Cyrillic. Exact UI strings: '5', 'Полно', '1250', 'Уровень 12', 'Дом'. Small '+' symbols. No other copy.\n\nMaterials/style: preserve image2's accomplished painted 2D environment and cartoon character, highly readable softly beveled enamel buttons, warm cream and medium village blue, leaf-green CTA. Keep subtle wood grain and a little decorative charm but avoid ornamental floral UI clutter. No photorealism, no flat vector wireframe.\nAVOID: giant brand/title sign, word 'Простоквашино' as a header, album, map, progression chests, reward chest panels, right-side event buttons, hanging parcel timer, daily tasks, extra buttons, screenshot border, six tabs or four tabs, characters from image1.",
+      "visualQA": {
+        "status": "accepted",
+        "notes": "Single joined resource bar, circular profile left, one Level12 CTA, 5 tabs with Home raised center. No chest/title/event/new UX. Warm veranda and Matroskin retained. Button slightly wider than reference, concept not pixel-perfect."
+      }
+    },
+    {
+      "file": "prelevel.png",
+      "sha256": "54e0502f81fb612184569a7c558407851614150e9438742070f08749e0f1dc50",
+      "size": {
+        "width": 841,
+        "height": 1870
+      },
+      "source": "Generated image source; internal path omitted",
+      "references": [
+        "home.png",
+        "reference/S032_level2_pre.png"
+      ],
+      "referenceRoles": [
+        "Edit target / unchanged dimmed backdrop",
+        "Structure only"
+      ],
+      "prompt": "Use case: ui-mockup.\nAsset type: finished hand-painted mobile puzzle prelevel modal, portrait 9:20 (same canvas proportions as both references), full bleed, no device frame.\nPrimary request: Create a Prostokvashino LEVEL START screenshot using the exact HOME screenshot in Image 1 as its unchanged backdrop, dimmed, with a fresh painted blue-wood-and-cream modal arranged exactly like Image 2. Keep familiar game UX, no added goals panel.\n\nINPUT ROLES:\nImage 1 is the EDIT TARGET / base home: preserve its screen composition, top resource bar with Matroskin circle left, veranda, seated Matroskin, lower green level button and five bottom nav icons in their exact positions. Dim the complete home with a semitransparent neutral dark overlay. Do not rearrange or add anything to the home.\nImage 2 is STRUCTURE ONLY for the prelevel modal: title at top, close X in upper right, inset with 3 empty stars then divider then booster caption and 3 locked slots, single green Play button at bottom. DO NOT copy original red UI, desert background, characters, original logo or Facebook strip. Repaint everything using Image 1's cream enamel, blue wood, warm highlights, dark navy typography.\n\nModal geometry relative to full canvas:\n- Center one large rounded blue painted wood frame, outer bounds about x.05-.95 and y.21-.73. Top header region y.215-.29 contains large cream text 'Уровень 12'. Circular red enamel button with cream '×' overlaps upper right x.86-.98 y.195-.25.\n- Main cream enamel recessed panel x.105-.895,y.295-.59. Upper half contains exactly THREE LARGE EMPTY embossed star silhouettes, dark muted blue infill, cream/blue rims, middle star slightly raised, stars empty/unearned rather than shining yellow.\n- Thin warm white horizontal divider y.425.\n- Caption 'Выберите усилители:' centered around y.455, dark navy in legible bold Cyrillic.\n- Exactly three equal square rounded blue enamel booster slots at x .21-.38, .415-.585, .62-.79 and y .48-.56, each showing one centered silver padlock icon, no numbers, no extra booster badges or unlock level labels. These are three LOCKED booster slots matching observed reference.\n- One large leaf-green enamel button, x .185-.815,y .61-.705 with single large cream label 'Играть'. Button integrated in lower frame like Image2.\n- Blue wood frame modest dimensional highlights, cream inset clean and quiet. A tiny amount of edge grain is enough, do not cover interface in flowers.\n- Under modal, dimmed home should remain recognizable above, beside and below; five bottom nav icons stay visible dimmed at bottom. No external sign-in/social banner of any kind.\n\nTypography exact: 'Уровень 12', 'Выберите усилители:', 'Играть', '×'. No other new text.\nVisual quality: production-quality painted 2D casual game UI, tactile rounded enamel and blue painted wood, highly legible hierarchy, same palette as Image1. Match original layout accurately, not a moodboard. No extra character placed inside dialog.\nAvoid: goals, crate targets, coin rewards, a second CTA, reward chests, icons in place of locked boosters, extra button rows, different backdrop, a full-body character over modal, Facebook or any social connection strip, new tabs.",
+      "visualQA": {
+        "status": "accepted",
+        "notes": "Same home dimmed. Modal matches observed title,3empty stars,booster selection caption,3locked slots,Play andX. No goals block or extra CTA. Social connection strip deliberately omitted without replacement."
+      }
+    }
+  ],
+  "notes": "Generated outputs are approximately 9:20 (841/1870=0.4497) matching 720x1600 reference ratio0.45. No raster editing or resizing performed."
+}

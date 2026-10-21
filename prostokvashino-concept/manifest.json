@@ -1,0 +1,125 @@
+{
+  "created": "2026-10-21",
+  "concept": "Prostokvashino",
+  "iteration": 3,
+  "generation": "Built-in image_gen; gallery screenshots rendered in browser",
+  "artwork": [
+    {
+      "name": "game",
+      "file": "game.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2523903,
+      "sha256": "6d9c30c74e8457b65b9a4683f4b0ac976e541e43526d9560e85a7b2fb283579c"
+    },
+    {
+      "name": "home",
+      "file": "home.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2596417,
+      "sha256": "b7a40b3f4b3e692d32e8812102d8291a8be4b91f5c03f081917027cd77c2ae1f"
+    },
+    {
+      "name": "prelevel",
+      "file": "prelevel.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 1925695,
+      "sha256": "54e0502f81fb612184569a7c558407851614150e9438742070f08749e0f1dc50"
+    },
+    {
+      "name": "victory",
+      "file": "victory.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2032144,
+      "sha256": "364b147f7bf3edf6c4eb148b9407404c95c6c4e4b8487280a837c49de332d0cf"
+    },
+    {
+      "name": "continue",
+      "file": "continue.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2053511,
+      "sha256": "cc5ca6d34b2da27fdcd89fe093cb9e0a5e423a384a8d0b45c624bf237a82acd6"
+    },
+    {
+      "name": "failed",
+      "file": "failed.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2016130,
+      "sha256": "d0741542f5ea8e0308982fec05ef77321b18e01b67229fe329e219faeb7480fa"
+    },
+    {
+      "name": "quit",
+      "file": "quit.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2021251,
+      "sha256": "d691c796bc049c5d2aecc4b4b385e95b1768cf3633ec80e191d1f04bd88194b4"
+    },
+    {
+      "name": "settings",
+      "file": "settings.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 1852198,
+      "sha256": "65862c852e8f08805fa7f741653a7011c163a549d6ed8752deb16187d457bac5"
+    },
+    {
+      "name": "tutorial",
+      "file": "tutorial.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 1953341,
+      "sha256": "11b9dcde549e1efd80123a9f352b3157aa39e91b3bc3a15b4e638b66a8386813"
+    },
+    {
+      "name": "tool",
+      "file": "tool.png",
+      "width": 841,
+      "height": 1870,
+      "bytes": 2461985,
+      "sha256": "465cf2852af13353ffa6c29d17c1314dcbb76f512f3830f8e6a0ec05485c2085"
+    },
+    {
+      "name": "components",
+      "file": "components.png",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 2175829,
+      "sha256": "80ed00fbe55018bddb9b3247c3da23db27d45248a8c03df0538953d56fd27acb"
+    },
+    {
+      "name": "items",
+      "file": "items.png",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 1901446,
+      "sha256": "c0c00424dc91f9b1a82bc5d0d10514ae86ffcc0edc94e5aaa4bc7225dc34f49e"
+    },
+    {
+      "name": "portraits",
+      "file": "portraits.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2007639,
+      "sha256": "0222a18e3d1fea3e213851c3c5d831852647a0fce734eca1024f18a3c7a6aedb"
+    }
+  ],
+  "referenceIndex": "reference/index.json",
+  "promptSets": [
+    "core-prompts.json",
+    "home-prompts.json",
+    "dialogs-prompts.json",
+    "settings-prompts.json"
+  ],
+  "validation": {
+    "valid": true,
+    "renderCount": 20,
+    "checkCount": 40,
+    "errors": []
+  }
+}

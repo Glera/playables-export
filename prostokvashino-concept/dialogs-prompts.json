@@ -1,0 +1,145 @@
+{
+  "mode": "built-in image_gen",
+  "created": "2026-10-21",
+  "quotaBeforeGenerationUsedPercent": 16,
+  "records": [
+    {
+      "key": "victory",
+      "reference": "S133_l2_reward.png",
+      "instructions": "Dialog composition: centered modal x5–95% of screen width, top20%, bottom73%. Rounded blue wooden outer frame, upper header within frame. Exact title \"Уровень 12\" centered, small round red close button with cream X attached upper-right. Main cream inset spans width11–89%, y29–58%. Three large earned gold stars in a horizontal row at y35%, center star slightly raised. Under stars, one centered line \"Счёт: 89620\" at y43%, bold navy label and warm gold/orange score digits. Thin pale divider below. Completed goals row at y53%: one wooden crate and one pink balloon side by side, each with large clear green checkmark; no quantity text. One broad green enamel rounded button at x17–83%,y60–70% with exact label \"Дальше\". Match reference hierarchy and relative scale with good breathing space. The dialog has no other actions. Background header goals may show green checks and moves \"0\" as completed state, bar filled with3goldstars; keep all geometry otherwise unchanged.\nConstraints: keep visible board behind the modal. No fullpage victory scene, no large Matroskin above modal, no coin reward, no reward chest or progress chest, no confetti covering labels, no social connect footer or replacement feature. Bottom tool strip from base remains dimmed.",
+      "prompt": "Use case: ui-mockup. Asset type: one full rendered mobile blast-puzzle screen, shippable painted UI look.\nPrimary request: create the specified modal over the provided Prostokvashino gameplay screen. This is a precise composition/reference translation, not a new layout exploration.\nInput images: Image1 is EDIT TARGET/base gameplay screen and exact ART identity. Preserve its full portrait frame, Matroskin circular head portrait on upper LEFT, goals center, moves right, progress strip, village setting, board grid footprint, bottom-left gear and four icon slots. Image2 is STRUCTURE reference only: use its dialog hierarchy, position, relative sizes, close control and spacing. Do not copy its red theme, bear, Toon artwork, brand/social UI or source pixels. Image3 is ART reference only for blue painted wood, cream enamel, rounded green enamel buttons, gold edges and the existing delicate painted finish. It is NOT a structural reference; never import its large character, chest, coin reward or scene composition.\nCanvas: tall 9:20 portrait, 720x1600 proportional; no device bezel, no margins, no collage. Same exact gameplay screen behind the dialog, darkened evenly with a translucent neutral scrim; background remains legible but subordinate. Do not move, resize or simplify the board or HUD. The original single circular Matroskin remains upper-left; no second or fullbody character anywhere.\nStyle/materials: finely painted blue wood with subtle grain, rounded cream enamel inset and dark navy typography; few tiny brass screw details, green enamel primary button. Match the base artwork's polish, no photoreal materials, no schematic boxes. Crisp readable Russian lettering.\n\nDialog composition: centered modal x5–95% of screen width, top20%, bottom73%. Rounded blue wooden outer frame, upper header within frame. Exact title \"Уровень 12\" centered, small round red close button with cream X attached upper-right. Main cream inset spans width11–89%, y29–58%. Three large earned gold stars in a horizontal row at y35%, center star slightly raised. Under stars, one centered line \"Счёт: 89620\" at y43%, bold navy label and warm gold/orange score digits. Thin pale divider below. Completed goals row at y53%: one wooden crate and one pink balloon side by side, each with large clear green checkmark; no quantity text. One broad green enamel rounded button at x17–83%,y60–70% with exact label \"Дальше\". Match reference hierarchy and relative scale with good breathing space. The dialog has no other actions. Background header goals may show green checks and moves \"0\" as completed state, bar filled with3goldstars; keep all geometry otherwise unchanged.\nConstraints: keep visible board behind the modal. No fullpage victory scene, no large Matroskin above modal, no coin reward, no reward chest or progress chest, no confetti covering labels, no social connect footer or replacement feature. Bottom tool strip from base remains dimmed.",
+      "referenced_image_paths": [
+        "game.png",
+        "Historical reference; not included in this public package (S133_l2_reward.png)",
+        "previous/victory.png"
+      ],
+      "status": "generated and visually inspected",
+      "originalGeneratedPath": "Generated image source; internal path omitted",
+      "repair": {
+        "prompt": "Use case: precise-object-edit. Image1 is the edit target. Keep the entire victory screen, modal artwork, every Russian word, three large stars, score89620, two completed goalicons, green Дальше button, all geometry, portrait, dimming, board and footer IDENTICAL. Correct ONLY the dimmed top gameplay HUD to match a completed level: replace the moves24 with0; replace each goalquantity8 and4 with a green completion check beside its existing crate/balloon; fill the thin progress bar green and render its three existing starlandmarks gold. Do not move or resize anything. No new text or objects. Same9:20 portrait841×1870 framing.",
+        "referenced_image_paths": [
+          "Generated image source; internal path omitted"
+        ],
+        "generatedPath": "Generated image source; internal path omitted"
+      },
+      "finalGeneratedPath": "Generated image source; internal path omitted",
+      "outputPath": "victory.png",
+      "mode": "built-in image_gen",
+      "dimensions": [
+        841,
+        1870
+      ],
+      "sha256": "364b147f7bf3edf6c4eb148b9407404c95c6c4e4b8487280a837c49de332d0cf",
+      "bytes": 2032144,
+      "referenceRoles": [
+        "game.png: edit target / stable base",
+        "original reference: structural hierarchy only",
+        "round2 victory: bluewood / cream / green art only"
+      ]
+    },
+    {
+      "key": "continue",
+      "reference": "S098_auto_waste_B2.png",
+      "instructions": "This is the out-of-moves CONTINUATION OFFER screen, distinct from failure. Preserve source layout as a wide panel: coin balance badge above at x3–41%,y10–15%; upper offer spans fullwidth,y17–59%. Add bluewood titlebar at y17–25%, exact \"Ходы закончились!\" in cream/navy lettering and a round red close X at far upper-right. Cream enamel central field y25–46%, subtle cream radial rays. Large centered gold-rimmed circular blue medal at y34% carrying clear \"+5\". Below it exact one line \"Ещё 5 ходов\" around y43%. The green primary button is broad x19–86%,y48–57%, integrated into lower frame; readable label \"Играть дальше\" and a gold coin symbol followed by \"100\" inside same button, with no currency symbol or price elsewhere. Above the offer, coinbalance shows a goldcoin, \"1250\" and small green + cap.\nUse same bluewood/cream/green rendering as the base. Dim base board remains visible below; preserve bottom gear plus4tool slots. Moves counter behind overlay is0, goals still crate8/balloon4; same board footprint. Do not change the underlying board layout.\nConstraints: one offer action only plus closeX. Omit the reference's separate Beginner's Bundle panel entirely; show the dimmed existing board in that lower area. Do not add an Exit button, retrybutton, ads, realcurrency purchase, giant second Matroskin, account/connect footer or new offer. No modal leveltitle for this offer. Plain rendered screen, noannotations.",
+      "prompt": "Use case: ui-mockup. Asset type: one full rendered mobile blast-puzzle screen, shippable painted UI look.\nPrimary request: create the specified modal over the provided Prostokvashino gameplay screen. This is a precise composition/reference translation, not a new layout exploration.\nInput images: Image1 is EDIT TARGET/base gameplay screen and exact ART identity. Preserve its full portrait frame, Matroskin circular head portrait on upper LEFT, goals center, moves right, progress strip, village setting, board grid footprint, bottom-left gear and four icon slots. Image2 is STRUCTURE reference only: use its dialog hierarchy, position, relative sizes, close control and spacing. Do not copy its red theme, bear, Toon artwork, brand/social UI or source pixels. Image3 is ART reference only for blue painted wood, cream enamel, rounded green enamel buttons, gold edges and the existing delicate painted finish. It is NOT a structural reference; never import its large character, chest, coin reward or scene composition.\nCanvas: tall 9:20 portrait, 720x1600 proportional; no device bezel, no margins, no collage. Same exact gameplay screen behind the dialog, darkened evenly with a translucent neutral scrim; background remains legible but subordinate. Do not move, resize or simplify the board or HUD. The original single circular Matroskin remains upper-left; no second or fullbody character anywhere.\nStyle/materials: finely painted blue wood with subtle grain, rounded cream enamel inset and dark navy typography; few tiny brass screw details, green enamel primary button. Match the base artwork's polish, no photoreal materials, no schematic boxes. Crisp readable Russian lettering.\n\nThis is the out-of-moves CONTINUATION OFFER screen, distinct from failure. Preserve source layout as a wide panel: coin balance badge above at x3–41%,y10–15%; upper offer spans fullwidth,y17–59%. Add bluewood titlebar at y17–25%, exact \"Ходы закончились!\" in cream/navy lettering and a round red close X at far upper-right. Cream enamel central field y25–46%, subtle cream radial rays. Large centered gold-rimmed circular blue medal at y34% carrying clear \"+5\". Below it exact one line \"Ещё 5 ходов\" around y43%. The green primary button is broad x19–86%,y48–57%, integrated into lower frame; readable label \"Играть дальше\" and a gold coin symbol followed by \"100\" inside same button, with no currency symbol or price elsewhere. Above the offer, coinbalance shows a goldcoin, \"1250\" and small green + cap.\nUse same bluewood/cream/green rendering as the base. Dim base board remains visible below; preserve bottom gear plus4tool slots. Moves counter behind overlay is0, goals still crate8/balloon4; same board footprint. Do not change the underlying board layout.\nConstraints: one offer action only plus closeX. Omit the reference's separate Beginner's Bundle panel entirely; show the dimmed existing board in that lower area. Do not add an Exit button, retrybutton, ads, realcurrency purchase, giant second Matroskin, account/connect footer or new offer. No modal leveltitle for this offer. Plain rendered screen, noannotations.",
+      "referenced_image_paths": [
+        "game.png",
+        "reference/S098_auto_waste_B2.png",
+        "previous/victory.png"
+      ],
+      "status": "generated and visually inspected",
+      "originalGeneratedPath": "Generated image source; internal path omitted",
+      "repair": {
+        "prompt": "Use case: precise-object-edit. Image1 is EDIT TARGET. Image2 is STRUCTURE reference only. Correct ONLY vertical placement and width of the existing continuation offer to match Image2: move the offer UP so its top titlebar begins at17% of fullscreen height, just below the existing starstrip; make its bluewood banner span full screenwidth, the creamcentralfield runs25–46% ofheight, the +5medal centeredat34%, \"Ещё5ходов\" aty43%, existing green \"Играть дальше\"coin100button aty48–57%. The offer's bottom includingbutton must end at59%ofscreenheight. Move the existing coinbalance1250badge up to x3–41%,y10–15%, overlapping dimmed leftportrait area justlikeImage2. These coordinates are percentages of the ENTIRE841×1870canvas, not of the dialog. Title exact \"Ходы закончились!\", rest of text and all renderedmaterials unchanged. Restore the dimmed board/scenery wherever the old lowpanelwas, without moving any backgroundcontent. BackgroundHUD0moves alreadycorrect; keep it. Same circularMatroskinupperLEFT, existing full9x9board location, baseart, dimming, bottomgear/fourtools all unchanged. Do not add Image2 bundle, branding, socialfooter, extraCTA or anynewfeature. Output same9:20portraitframe.",
+        "referenced_image_paths": [
+          "Generated image source; internal path omitted",
+          "reference/S098_auto_waste_B2.png"
+        ],
+        "generatedPath": "Generated image source; internal path omitted"
+      },
+      "finalGeneratedPath": "Generated image source; internal path omitted",
+      "outputPath": "continue.png",
+      "mode": "built-in image_gen",
+      "boardRepair": {
+        "prompt": "Use case: precise-object-edit / compositing. Image1 is EDIT TARGET: a finished continuation-offer screen. Image2 is the EXACT background source. Make ONE repair: restore the visible dimmed game-board cells below the green offerbutton from the exact matching coordinates in Image2. The movement of the offer accidentally invented the middle visible rows; put back Image2's exact board content at the same9x9grid positions. Important visible rows below button: at originalrow5 yellowSun,yellowSun,greenLeaf,greenLeaf,HORIZONTALROCKET,purpleStar,purpleStar,crate,orangeDiamond; row6 yellowSun,crate,greenLeaf,pinkballoon,purpleStar,purpleStar,orangeDiamond,orangeDiamond,orangeDiamond; row7 blueDrop,blueDrop,redHeart,redHeart,crate,yellowSun,yellowSun,greenLeaf,greenLeaf; row8 blueDrop,VERTICALROCKET,redHeart,BOMB,crate,yellowSun,greenLeaf,greenLeaf,purpleStar; row9 RAINBOW,blueDrop,redHeart,redHeart,yellowSun,yellowSun,purpleStar,purpleStar,purpleStar. Match Image2 boardexactly, under the same dim overlay as Image1. Keep Image1 offerpanel completely unchanged in every respect: position, size, Ходы закончились! title, +5medal, Ещё5ходов, greenИграть дальшеcoin100, coinbalance1250atupperleft, redcloseX. Keep Image1 HUDwith0moves, circlehero, scenery, footer, entire841×1870frame unchanged. Do NOT move or resize anything. No new elements. Only correct the visible board tokens.",
+        "referenced_image_paths": [
+          "continue.png",
+          "game.png"
+        ],
+        "generatedPath": "Generated image source; internal path omitted"
+      },
+      "dimensions": [
+        841,
+        1870
+      ],
+      "sha256": "cc5ca6d34b2da27fdcd89fe093cb9e0a5e423a384a8d0b45c624bf237a82acd6",
+      "bytes": 2053511,
+      "referenceRoles": [
+        "game.png: edit target / stable base",
+        "original reference: structural hierarchy only",
+        "round2 victory: bluewood / cream / green art only"
+      ]
+    },
+    {
+      "key": "failed",
+      "reference": "S099_close_continue.png",
+      "instructions": "This is the separate FAILED / RETRY dialog, after dismissing continuation. Centered rounded blue wooden modal x5–95%, y17–73%. Title \"Уровень 12\" in top header, round red close X attached upper-right. Cream enamel main inset beginsy25% and endsy59%. Exact message \"Уровень не пройден\" centered near y28%. Large glossy painted red brokenheart centered y36%, clean recognizable zigzag gap. Thin horizontal divider near y43%. Exact text \"Выберите усилители\" near y47%. Directly below, three equal square bluewood-backed cream booster slots in a horizontal row at y50–57%, each with a clear silver padlock; all three locked, no quantities, no selectionchecks. One broad rounded green primarybutton at x17–83%,y61–71%, exact text \"Ещё раз\". Match reference visual ordering and relative proportions. No other actions. The base header behind remains dimmed: moves0, still-unmet crate8 andballoon4; no major restaging of board/background.\nConstraints: no stars in this failed dialog, no coinpayment, no +5offer, no Stay/Exit secondarybuttons, no giant or additional Matroskin, no socialconnect or substitutefooter; same base toolstrip stays dimmed.",
+      "prompt": "Use case: ui-mockup. Asset type: one full rendered mobile blast-puzzle screen, shippable painted UI look.\nPrimary request: create the specified modal over the provided Prostokvashino gameplay screen. This is a precise composition/reference translation, not a new layout exploration.\nInput images: Image1 is EDIT TARGET/base gameplay screen and exact ART identity. Preserve its full portrait frame, Matroskin circular head portrait on upper LEFT, goals center, moves right, progress strip, village setting, board grid footprint, bottom-left gear and four icon slots. Image2 is STRUCTURE reference only: use its dialog hierarchy, position, relative sizes, close control and spacing. Do not copy its red theme, bear, Toon artwork, brand/social UI or source pixels. Image3 is ART reference only for blue painted wood, cream enamel, rounded green enamel buttons, gold edges and the existing delicate painted finish. It is NOT a structural reference; never import its large character, chest, coin reward or scene composition.\nCanvas: tall 9:20 portrait, 720x1600 proportional; no device bezel, no margins, no collage. Same exact gameplay screen behind the dialog, darkened evenly with a translucent neutral scrim; background remains legible but subordinate. Do not move, resize or simplify the board or HUD. The original single circular Matroskin remains upper-left; no second or fullbody character anywhere.\nStyle/materials: finely painted blue wood with subtle grain, rounded cream enamel inset and dark navy typography; few tiny brass screw details, green enamel primary button. Match the base artwork's polish, no photoreal materials, no schematic boxes. Crisp readable Russian lettering.\n\nThis is the separate FAILED / RETRY dialog, after dismissing continuation. Centered rounded blue wooden modal x5–95%, y17–73%. Title \"Уровень 12\" in top header, round red close X attached upper-right. Cream enamel main inset beginsy25% and endsy59%. Exact message \"Уровень не пройден\" centered near y28%. Large glossy painted red brokenheart centered y36%, clean recognizable zigzag gap. Thin horizontal divider near y43%. Exact text \"Выберите усилители\" near y47%. Directly below, three equal square bluewood-backed cream booster slots in a horizontal row at y50–57%, each with a clear silver padlock; all three locked, no quantities, no selectionchecks. One broad rounded green primarybutton at x17–83%,y61–71%, exact text \"Ещё раз\". Match reference visual ordering and relative proportions. No other actions. The base header behind remains dimmed: moves0, still-unmet crate8 andballoon4; no major restaging of board/background.\nConstraints: no stars in this failed dialog, no coinpayment, no +5offer, no Stay/Exit secondarybuttons, no giant or additional Matroskin, no socialconnect or substitutefooter; same base toolstrip stays dimmed.",
+      "referenced_image_paths": [
+        "game.png",
+        "reference/S099_close_continue.png",
+        "previous/victory.png"
+      ],
+      "status": "generated and visually inspected",
+      "originalGeneratedPath": "Generated image source; internal path omitted",
+      "repair": {
+        "prompt": "Use case: precise-object-edit. Image1 is the edit target. Change ONLY the dimmed upper-right move counter from24 to0, matching failure due to no moves. Keep the entire illustration and failure dialog pixel-aligned: level12 title, message Уровень не пройден, brokenheart, caption Выберите усилители, exactly3lockedslots, green Ещё раз, redX, circularMatroskinleft, board layout, palette, dimming, original9:20frame, every other element unchanged. Do not reposition the dialog, do not change any other numbers or words.",
+        "referenced_image_paths": [
+          "Generated image source; internal path omitted"
+        ],
+        "generatedPath": "Generated image source; internal path omitted"
+      },
+      "finalGeneratedPath": "Generated image source; internal path omitted",
+      "outputPath": "failed.png",
+      "mode": "built-in image_gen",
+      "dimensions": [
+        841,
+        1870
+      ],
+      "sha256": "d0741542f5ea8e0308982fec05ef77321b18e01b67229fe329e219faeb7480fa",
+      "bytes": 2016130,
+      "referenceRoles": [
+        "game.png: edit target / stable base",
+        "original reference: structural hierarchy only",
+        "round2 victory: bluewood / cream / green art only"
+      ]
+    },
+    {
+      "key": "quit",
+      "reference": "S043_l2_quit_dialog.png",
+      "instructions": "This is the QUIT CONFIRMATION dialog over still-active gameplay. Centered rounded blue wooden modal x5–95%,y25–68%. Header exact \"Вы уверены?\" with large cream lettering on bluewood, close control a round red button with cream X attachedupper-right. Main cream enamel inset y34–54%. Large red painted glossy brokenheart centeredx50%,y41%, recognizable zigzag split. Beneath, bold navy warning exact \"Вы потеряете 1 жизнь\" on one clean centeredline ifspaceallows; number1 warmred. One broad green enamel primarybutton x16–84%,y56–65%, exact text \"Выйти\". The X is the only dismissal / return-to-game control. Preserve original background gameplay with24moves,8crate/4balloongoals, fixed circularleftMatroskin, samefullboard, footer and scene, dimmed.\nConstraints: no Stay button, no second CTA, no additional explanatory paragraphs, no fullbody character, no coins or rewards, no extra socialfooter. Exactreference hierarchy: title → brokenheart → life-loss warning → singleexitbutton.",
+      "prompt": "Use case: ui-mockup. Asset type: one full rendered mobile blast-puzzle screen, shippable painted UI look.\nPrimary request: create the specified modal over the provided Prostokvashino gameplay screen. This is a precise composition/reference translation, not a new layout exploration.\nInput images: Image1 is EDIT TARGET/base gameplay screen and exact ART identity. Preserve its full portrait frame, Matroskin circular head portrait on upper LEFT, goals center, moves right, progress strip, village setting, board grid footprint, bottom-left gear and four icon slots. Image2 is STRUCTURE reference only: use its dialog hierarchy, position, relative sizes, close control and spacing. Do not copy its red theme, bear, Toon artwork, brand/social UI or source pixels. Image3 is ART reference only for blue painted wood, cream enamel, rounded green enamel buttons, gold edges and the existing delicate painted finish. It is NOT a structural reference; never import its large character, chest, coin reward or scene composition.\nCanvas: tall 9:20 portrait, 720x1600 proportional; no device bezel, no margins, no collage. Same exact gameplay screen behind the dialog, darkened evenly with a translucent neutral scrim; background remains legible but subordinate. Do not move, resize or simplify the board or HUD. The original single circular Matroskin remains upper-left; no second or fullbody character anywhere.\nStyle/materials: finely painted blue wood with subtle grain, rounded cream enamel inset and dark navy typography; few tiny brass screw details, green enamel primary button. Match the base artwork's polish, no photoreal materials, no schematic boxes. Crisp readable Russian lettering.\n\nThis is the QUIT CONFIRMATION dialog over still-active gameplay. Centered rounded blue wooden modal x5–95%,y25–68%. Header exact \"Вы уверены?\" with large cream lettering on bluewood, close control a round red button with cream X attachedupper-right. Main cream enamel inset y34–54%. Large red painted glossy brokenheart centeredx50%,y41%, recognizable zigzag split. Beneath, bold navy warning exact \"Вы потеряете 1 жизнь\" on one clean centeredline ifspaceallows; number1 warmred. One broad green enamel primarybutton x16–84%,y56–65%, exact text \"Выйти\". The X is the only dismissal / return-to-game control. Preserve original background gameplay with24moves,8crate/4balloongoals, fixed circularleftMatroskin, samefullboard, footer and scene, dimmed.\nConstraints: no Stay button, no second CTA, no additional explanatory paragraphs, no fullbody character, no coins or rewards, no extra socialfooter. Exactreference hierarchy: title → brokenheart → life-loss warning → singleexitbutton.",
+      "referenced_image_paths": [
+        "game.png",
+        "reference/S043_l2_quit_dialog.png",
+        "previous/victory.png"
+      ],
+      "status": "generated and visually inspected",
+      "originalGeneratedPath": "Generated image source; internal path omitted",
+      "finalGeneratedPath": "Generated image source; internal path omitted",
+      "outputPath": "quit.png",
+      "mode": "built-in image_gen",
+      "dimensions": [
+        841,
+        1870
+      ],
+      "sha256": "d691c796bc049c5d2aecc4b4b385e95b1768cf3633ec80e191d1f04bd88194b4",
+      "bytes": 2021251,
+      "referenceRoles": [
+        "game.png: edit target / stable base",
+        "original reference: structural hierarchy only",
+        "round2 victory: bluewood / cream / green art only"
+      ]
+    }
+  ]
+}

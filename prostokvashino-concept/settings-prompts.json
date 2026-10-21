@@ -1,0 +1,32 @@
+{
+  "mode": "built-in image_gen",
+  "generatedAt": "2026-10-21",
+  "file": "settings.png",
+  "source": "Generated image source; internal path omitted",
+  "dimensions": {
+    "width": 841,
+    "height": 1870
+  },
+  "references": [
+    "game.png",
+    "reference/S042_l2_settings.png"
+  ],
+  "referenceRoles": [
+    "Edit target, accepted game.png",
+    "Structure reference, S042"
+  ],
+  "prompt": "Use case: precise-object-edit / ui-mockup.\nAsset type: finished painted mobile puzzle game SETTINGS EXPANDED state. Output must retain Image1's exact 841:1870 portrait proportions, approximately 9:20.\nPrimary request: Change Image 1 ONLY by adding the opened settings overlay state seen in Image2. Keep the entire existing gameplay screenshot composition and all individual tiles identical. This is an expanded vertical mini-menu above the existing lower-left gear, NOT a settings dialog or a new screen.\n\nInput roles:\nImage1 is EDIT TARGET: approved Prostokvashino gameplay image. Preserve exactly its classic Matroskin round portrait at top left, goals crate8/balloon4, moves24, starbar, veranda/garden backdrop,9x9board with identical colors and occupied cells and all specials/obstacles,bluewoodfooter,4toolslots and inventory3.\nImage2 is STRUCTURE reference ONLY: demonstrate dimming and a stack of three round menu buttons rising above the lower-left gear. Do not copy the original red/desert palette, character, board, text, or any existing pixels. Render the three new buttons in the tactile enamel style of Image1.\n\nONLY CHANGES ALLOWED:\n1. Apply an even semitransparent black/dark navy overlay to the ENTIRE Image1, darkening it around65%. It must dim the whole scene, Matroskin, HUD,board AND all4toolslots, inventorybadges andfooter.\n2. Keep the existing bottom-left round gear button completely BRIGHT and undimmed at its existing exact position.\n3. Above the gear, add exactly THREE new circular enamel buttons, vertically aligned with its center, roughly x=.097 of screen width. Each roundbutton diameter about .15 of screenwidth (~126px on841px canvas), thin cream enamel rim, subtle blueedge.\n  - TOP: EXIT, centered at screen x .097,y .707, crimson red circular button, cream icon of a door/leftward exit arrow. Icon only, no word.\n  - MIDDLE: SOUND, centered x .097,y .785, leaf-green circular button, cream speaker with two soundwave strokes. Icon only.\n  - BOTTOM: MUSIC, centered x .097,y .864, leaf-green circular button, cream double musical note. Icon only.\nThe three menu buttons must be vibrant and undimmed and visually float above the dark overlay, like Image2. The menu is situated on the left edge, partially in front of the lower left board for the highestbutton; the existing board remains underneath, not reflowed or moved.\n\nInvariants: Image1 screen aspect, crops, characterportrait, HUDnumbers, exactboardgrid/tile positions, footerposition, and fourtoolicons must remain identical. No shift of anybaseUI, no zoom, no new title, no textlabels, no window/panel backing, no closeX, no extra switches, no new notifications, no motionblur. Only three menu circles and dimming are added. Keep thin cream rims and existing paintedenamelstyle.",
+  "visualQA": {
+    "status": "accepted after one targeted positioning repair",
+    "preserved": "Visual composition, portrait, HUD8/4/24, board cells and all specials, dimming, gear andfourtoolfooter. No panel ornewcopy.",
+    "improvement": "Menu moved down, music close togear. Approximate final centers y0.717/0.783/0.851 vs requested0.705/0.780/0.855. Remainingpixel-level drift documented; no exactpixel preservationclaim."
+  },
+  "sha256": "65862c852e8f08805fa7f741653a7011c163a549d6ed8752deb16187d457bac5",
+  "repair": {
+    "prompt": "Use case: precise-object-edit.\nEDIT TARGET: the attached painted Prostokvashino settings-expanded screenshot,841×1870. Make ONLY a precise control-position adjustment. Do not redraw the background or any base game pixels. Keep the entire image, dimming amount, circular Matroskin portrait, HUD8/4/24, all81boardcells, everytile/obstacle/special, toolfooter, gearbutton exactly unchanged. Samecanvas841×1870 andidenticalcrop.\nOnly move the THREE EXISTING floating menu circles, preserving their art, icons and colors. Keep each radius about55px (diameter110px). Vertically align allthree on center x=82px (normalizedx0.097). Their new exact centers on the1870px-high image must be:\n- Red EXIT circle: center(82,1318), normalizedy0.705. Move current exitcircle DOWN about41px.\n- Green SOUND circle: center(82,1459),normalizedy0.780. Move current soundcircle DOWN about56px.\n- Green MUSIC circle: center(82,1599),normalizedy0.855. Move current musiccircle DOWN about71px.\nThe EXISTING bright bluegear stays fixed at its original location around(79,1747); do not moveit. The result has approximately140px even center-to-center spacing between exit/sound/music and about148px betweenmusic andgear, visibly moving musiccloser tothegear. Keep circularbuttonart and creamrims unchanged. Fill their vacated locations seamlessly from the existing dimmedboard/background, without moving or changing any boardcell. No other edits. Do not addwording,panels,labels,buttons or newUI. This is a mechanical layoutmove only, not an art regeneration.",
+    "editTargetAtCall": "settings.png",
+    "preservedPreviousVersion": "Internal research or intermediate; path omitted",
+    "previousSHA256": "57553b11004077c251746247f4734908fc42101f23d4661a8f178accdd2d96cf",
+    "previousSource": "Generated image source; internal path omitted"
+  }
+}

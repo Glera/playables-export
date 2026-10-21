@@ -1,0 +1,194 @@
+{
+  "concept": "Простоквашино: структура по локальным референсам",
+  "date": "2026-10-21",
+  "method": "Built-in image_gen; no programmatic raster editing",
+  "referencesAreReadOnly": true,
+  "scope": "Core6assets only; home and modal generation metadata in sibling files",
+  "validation": {
+    "method": "Manual visual inspection of all inputs and all outputs, no pixel-perfect claims",
+    "game": {
+      "rows": 9,
+      "columns": 9,
+      "crates": 8,
+      "balloons": 4,
+      "portrait": "top-leftcircle",
+      "goals": 8,
+      "moves": 24,
+      "starLandmarks": 3,
+      "footer": "gear+4icon-onlytools"
+    },
+    "tool": {
+      "rows": 9,
+      "columns": 9,
+      "crates": 8,
+      "balloons": 4,
+      "targetRow": 7,
+      "contentMatchesBase": false,
+      "tokenTypesAndPositionsMatchBase": true,
+      "damageStateDrift": "r7c5 crate became intact rather than cracked; count and position retained."
+    },
+    "tutorial": {
+      "visibleBoardContentMatchesBase": true,
+      "overlayOccludesTopRow": true,
+      "highlightedCells": [
+        "r7c1",
+        "r7c2",
+        "r8c1"
+      ]
+    },
+    "limitations": [
+      "Approximate reference layout. Footer begins near89% rather than91% ofheight.",
+      "Unlocked tool order/3inventory badges are proposed adaptation; captured level2reference has lockedtools.",
+      "Tool-preview state is a proposed overlay, not directly recovered from a matching screenshot.",
+      "Components mini-gameHUD omits Цели tab; actual game has it.",
+      "Five home destinations are represented by observed icons; onlyHome is named.",
+      "All images are flattened concept art, not implemented UI or sliced production assets.",
+      "841x1870 matches9:20 within rounding; no raster cropping was used.",
+      "Tool preview r7c5 crate damage stage drifted to intact; all token types, counts and positions retained."
+    ],
+    "items": {
+      "count": 20,
+      "baseBlocks": 6,
+      "specials": 4,
+      "obstaclesAndEffects": 6,
+      "tools": 4,
+      "allVisuallyInspected": true
+    }
+  },
+  "generations": [
+    {
+      "asset": "game",
+      "mode": "built-in image_gen",
+      "intent": "generate with strict structure and art references",
+      "prompt": "Use case: ui-mockup / style-transfer. Produce a FINAL hand-painted Prostokvashino mobile puzzle GAME SCREEN. Image1 is the STRICT STRUCTURAL TARGET: exact tall720x1600 aspect9:20 and all normalized UI positions. Image2 is ONLY ART DIRECTION: blue painted wood, cream enamel, Matroskin identity, colored embossed cubes and tool sprites. Image3 is ONLY ART COMPONENT reference. Render all pixels fresh. DO NOT preserve bear, canyon, Toon text, pink mass-balloon level, colors, branding or art from Image1. DO NOT preserve Image2's wrong layout, top title/pause, right-side large character or labeled tool cards.\nABSOLUTE CANVAS AND GEOMETRY: portrait9:20,720x1600 or exact proportional higher resolution. Full bleed, no device, no margins around screenshot. Top HUD region y0–.17. ONE circular Matroskin portrait on LEFT with bounds x.015–.34,y.04–.185, cream/blue round rim, fully recognizable classic gray striped Matroskin head inside circle, warm subtle smile. No other Matroskin in scene. Goals cream enamel rectangle x.365–.76,y.05–.126 with small tab label 'Цели', crate sprite and8, pink balloon sprite and4. Moves cream enamel rectangle x.787–.98,y.05–.126 with small tab label 'Ходы' and large24. Thin horizontal progress strip with THREE star landmarks at y.15,x.32–.98 directly below goals. NO level-title bar and NO pause.\nQuiet softly painted village/veranda garden backdrop between HUD and board y.18–.32. Board bounds x.02–.98,y.324–.768, exactly NINE columns and NINE rows, near-square overall. This layout has lots of sky/soft yard ABOVE board; do not move board upwards. A subdued blue recessed board tray with thin blue wood edge. 81 tightly aligned individually painted glossy enamel square blocks with subtle gaps. Six vivid colors and embossed symbols from Image2: blue drop,red heart,yellow sun,green leaf,purple star,orange diamond.\nExact 9x9 map, one token per cell, use it to preserve8crates4balloons and playable groups:\nB B Y Y G G P P O\nB C Y A G C P O O\nR R C Y A G P P B\nR R Y C G G A B B\nY Y G G H P P C O\nY C G A P P O O O\nB B R R C Y Y G G\nB V R X C Y G G P\nD B R R Y Y P P P\nBblue,Rred,Yyellow,Ggreen,Ppurple,Oorange,Cwoodencrate,Apinkballoon,Hhorizontalred-whiterocket,Vverticalrocket,Xnavybombwithstar,Drainboworb. Crates include intact/cracked/broken states consistent with artwork. Balloons and short strings stay inside their own cell. Do not alter9x9 count.\nLower quiet yard/veranda floor y.77–.91. Bottom tool band y.91–1: at farLEFT small round enamel gear centerx.097; then FOUR compact square cream-enamel slots centeredx.314,.506,.701,.895 showing painted hammer, gardening glove, metal anvil, dice. Each has tiny red corner badge3. Icons only, NO text labels beneath tools. Do not enlarge tool strip. All controls comfortably inside screen.\nMaintain adult cozy polish, fine painted blue wood and warm cream materials, restrained corner chamomile, excellent clarity. Accurate Cyrillic 'Цели','Ходы' only. No giant title, no extra navigation during level, no events/chests, no full-body hero, no top settings or pause. Image1 layout fidelity has highest priority; Image2 art style is second. This must look like a real finished game, not a schematic.",
+      "references": [
+        "reference/S048_l2_retry_loaded.png",
+        "previous/game.png",
+        "Earlier Prostokvashino artwork; not included in this public package (kit.png)"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "game.png",
+      "selected": true,
+      "validation": "Visual manual check9x9,8crates4balloons. Left circle portrait, goals center,moves right,3stars,gear+4icon-onlytools. Board top~32%; footer top~89% rather than target91%.",
+      "dimensions": {
+        "width": 841,
+        "height": 1870
+      },
+      "sha256": "6d9c30c74e8457b65b9a4683f4b0ac976e541e43526d9560e85a7b2fb283579c"
+    },
+    {
+      "asset": "tutorial",
+      "mode": "built-in image_gen",
+      "intent": "targeted edit",
+      "prompt": "Use case: precise-object-edit. Image1 is the selected finished Prostokvashino gameplay screen, the EDIT TARGET. Image2 is ONLY a layout reference for an instructional overlay. Keep Image1's canvas aspect9:20, entire HUD positions and content, left circular Matroskin portrait, goals8/4, moves24, three-star bar, exact9x9 board tokens and tools, scenery, colors and geometry unchanged. Do not copy the bear, balloons, red UI or English text of Image2.\nCreate a tutorial state over Image1 matching Image2's hierarchy: darken inactive scenery,H​​UD and most of board with a translucent calm overlay; keep the existing left Matroskin circle bright and friendly. Add one cream enamel instruction card with blue rim across upper board, centered x.14–.86, y.32–.425, above grid. Text exactly on two lines: 'Нажми на группу' / 'кубиков'. Big readable dark-blue Cyrillic. No close button or extra CTA.\nSpotlight the connected blue-drop group at lower-left of Image1's board: row7 columns1–2 and row8 column1. Preserve all tile identities and locations. These3blue tiles remain bright, have a thin warm outline. A large white glove pointer hovers just above and points directly at the blue tile in row7column2; hand must not replace a tile. Everything else is dimmer but board remains visible. No full-body or extra Matroskin, no mini board, no change to board size, no new control. This is the same real game screen with an instructional overlay, not a separate illustrated study.",
+      "references": [
+        "game.png",
+        "reference/S012_level1_tutorial.png"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "tutorial.png",
+      "selected": true,
+      "validation": "Visible tiles retain their original identities/geometry; instruction overlays top row. Three connected blue blocks are highlighted.",
+      "dimensions": {
+        "width": 841,
+        "height": 1870
+      },
+      "sha256": "11b9dcde549e1efd80123a9f352b3157aa39e91b3bc3a15b4e638b66a8386813"
+    },
+    {
+      "asset": "tool",
+      "mode": "built-in image_gen",
+      "intent": "targeted edit",
+      "prompt": "Use case: precise-object-edit. Image1 is the selected finished Prostokvashino gameplay screen, EDIT TARGET. Preserve exact canvas9:20 and complete geometry: one circular Matroskin top LEFT, goals8/4 center, moves24 right,3starbar, same9x9 board, same lower gear and4icon-onlytool slots. No new layout, no new characters.\nShow a glove TOOL TARGET PREVIEW on this exact game screen. The second tool slot after hammer, the cream/green glove, is selected with a warm green-gold rim and remains bright; its3badge is unchanged because this is preview before use. Darken other controls, scenery and the rest of board with gentle translucent overlay. Highlight the ENTIRE seventh row of the existing9x9 board as one continuous horizontal band. Preserve that row's existing tiles B B R R C Y Y G G, leave all other tokens in their original places. Nine cells are individually visible with illuminated borders, and one clear double-headed left-right arrow runs horizontally across this whole row. No vertical ray and no single-cell targeting. Add a small white hand cursor pointing at center of this row.\nPlace a compact blue-rimmed cream enamel instruction card in the empty scenery gap above the board, y.245–.30, text exactly 'Выбери ряд'. Do not overlap HUD. No confirm button, no extra bottom labels. Portrait Matroskin stays in circle, attentive. This is a polished actual-game-screen state. All game counts remain unchanged; the effect is not yet executed.",
+      "references": [
+        "game.png"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "Internal research or intermediate; path omitted",
+      "selected": false,
+      "validation": "Rejected: accidentally duplicates row7 in row6, reducing balloons and changing board.",
+      "dimensions": {
+        "width": 841,
+        "height": 1870
+      },
+      "sha256": "30967bd219a116f553e4581c36664b3170d3d577517bb23da889dad1e8ae4eed"
+    },
+    {
+      "asset": "portraits",
+      "mode": "built-in image_gen",
+      "intent": "generate with art references",
+      "prompt": "Use case: ui-mockup / stylized-concept. Create a polished landscape portrait reaction sheet for the exact CLASSIC MATROSKIN portrait in Image1. Image1 is only character/rendering/rim reference. Six same-sized circular portraits in a spacious3columns×2rows layout, consistent camera/crop/scale, on warm plain cream artboard. Title exactly 'Матроскин — реакции'.\nEvery portrait is the same authentic gray-striped Soviet cat, same fur pattern, long white muzzle, small black nose, expressive eyebrows, restrained classic personality, head/shoulders fully inside the same thick cream enamel circle with thin painted-blue rim and muted blue background. Do not change to a generic cat. No full bodies, no outside scenery, no props, no costumes. Premium painted2D dimensional shading matching game but retain characteristic face.\nSix states in order, short exact Russian labels under each: 'Спокойствие' (subtle relaxed smile), 'Подсказка' (one eyebrow raised, attentive friendly gaze), 'Хороший ход' (pleased amused smile), 'Комбинация' (delighted surprised eyes, not manic), 'Победа' (warm proud grin), 'Неудача' (mild thoughtful disappointment, not crying). Preserve same identity and head scale across all six. These are reaction studies for the HUD, not new game features. No body extending beyond rim, no extra seventh portrait, no UI icons. Clean art direction sheet, richly illustrated portraits, clear typography.",
+      "references": [
+        "game.png"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "portraits.png",
+      "selected": true,
+      "validation": "Six consistent circular portraits and short Russian labels.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "0222a18e3d1fea3e213851c3c5d831852647a0fce734eca1024f18a3c7a6aedb"
+    },
+    {
+      "asset": "components",
+      "mode": "built-in image_gen",
+      "intent": "generate with art references",
+      "prompt": "Use case: ui-mockup. Create a large landscape professional GAME UI COMPONENT SHEET for the approved Prostokvashino interface. Image1 is exact gameplay HUD/footer style and structure reference. Image2 is exact HOME resource bar and FIVE-tab navigation reference. Image3 is exact modal chrome/stars/locked slots/button reference. Image4 provides existing block, crate, bubble and tool sprite art. Match approved blue painted wood, cream enamel, deep blue Cyrillic and green enamel buttons, adult cozy polish. Fresh raster art, clean spacious cream presentation artboard; high resolution4:3or3:2 landscape.\nTitle exactly 'Простоквашино — интерфейс'.\nOrganise six separated horizontal rows with concise Russian row headings:\n1 'Игровой HUD': a wide assembled strip copied in structure from Image1, circular Matroskin LEFT, goals8/4CENTER, moves24RIGHT, thin THREE-star progress bar below goals. No level title. Also show one empty and one filled small star next to the strip.\n2 'Ресурсы': one joined HOME bar from Image2: small circular Matroskin left, heart5and'Полно', coin1250, round gear right. No separate plates floating apart.\n3 'Нижние панели': two assembled strips stacked or side by side with good spacing. GAME strip: far-left gear, then hammer, glove, anvil, dice in FOUR square wells with small3badges, no labels. HOME strip: exactly FIVE slots in order storefront, overlapping cards, raisedcenterHOME, people, trophy. Onlycenterlabel'Дом'. Preserve circle-icons and cream raisedHomecenter from Image2; do not use old4-tabnavigation ormap/album labels.\n4 'Окно': a modular blue wood title header 'Уровень 12' with red roundX at right, cream inset panel fragment, three empty-star examples and three gold-star examples, thin divider, one locked blue square slot. These are reusable window components, not a newscreen.\n5 'Игровые элементы': six baseblocks (blue drop,red heart,yellow sun,green leaf,purple star,orange diamond), three wooden crate damage states, pinkballoon, blueblock in a clear iridescent bubble. Same sprite designs as Image4. Distinct readable silhouettes; all11objects intact.\n6 'Состояния кнопки': three greenPlay buttons all labeled'Играть', normal,pressed,disabled; one small selected-glove square with glow, one ordinary-glove square; large accessible paintedicons, no invented controls. Short captions only under3Playbuttons:'Обычная','Нажата','Недоступна'.\nAll rows spaced, no overlap, no cropped assets. This is a component atlas for the already approved layout, not a redesign and not a webdashboard. Use beautiful intentionally painted game UI pieces, no lineicon substitutes, no new tabs or features.",
+      "references": [
+        "game.png",
+        "home.png",
+        "prelevel.png",
+        "Earlier Prostokvashino artwork; not included in this public package (kit.png)"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "components.png",
+      "selected": true,
+      "validation": "Six organized rows. Missing tiny Цели tab on mini HUD; actual game screen has it. Five-tab navigation, gear+four-tool footer, all11base/obstacle pieces verified.",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "sha256": "80ed00fbe55018bddb9b3247c3da23db27d45248a8c03df0538953d56fd27acb"
+    },
+    {
+      "asset": "tool",
+      "mode": "built-in image_gen",
+      "intent": "targeted row-content repair",
+      "prompt": "Use case: precise-object-edit. Image1 is EDIT TARGET: Prostokvashino glove targeting preview. Image2 is AUTHORITATIVE BOARD CONTENT reference, the base game. Preserve Image1 entire screen geometry, overlay style, text 'Выбери ряд', selected bottom glove and its3badge, HUD goals8/4 and moves24, scenery, all other controls.\nCorrect exactly one board-content error and move highlight one row down:\nImage1 accidentally replaced original row6 with duplicate of row7. Restore row6 (sixth row from top) to exactly this original Image2 sequence left to right: YELLOW SUN, WOODEN CRATE, GREEN LEAF, PINK BALLOON, PURPLE STAR, PURPLE STAR, ORANGE DIAMOND, ORANGE DIAMOND, ORANGE DIAMOND. All nine restored cells are dimmed like ordinary inactive cells.\nThe target highlight MUST be row7, directly below restored row6. Its existing sequence is BLUE DROP, BLUE DROP, RED HEART, RED HEART, WOODEN CRATE, YELLOW SUN, YELLOW SUN, GREEN LEAF, GREEN LEAF. Keep this row intact. Move the warm continuous9-cell outline and long horizontal double-headed arrow and white hand cursor DOWN exactly ONE ROW to this row7. Row6 no longer has any glow or arrow. No vertical targeting. Count rows carefully: there are9total, with row8 containing the vertical rocket and bomb, and row9 containing rainbow orb. Target row7 is immediately above that row8.\nAll other tiles stay exactly as Image2. Final board must have8crates and4pinkballoons, nine rows andnine columns. This is a preview, no cells removed, no tool inventory consumed. No other alterations.",
+      "references": [
+        "Internal research or intermediate; path omitted",
+        "game.png"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "tool.png",
+      "selected": true,
+      "validation": "Restored row6; selected row7 now correct. Visual9x9,8crates4balloons. Generator removed broad scene dimming; clear row outline/arrow and selected glove remain. No new button or character. Local damage-stage drift: r7c5 crate intact rather than cracked. Token types/counts/positions preserved, exact sprite state not fully identical.",
+      "dimensions": {
+        "width": 841,
+        "height": 1870
+      },
+      "sha256": "465cf2852af13353ffa6c29d17c1314dcbb76f512f3830f8e6a0ec05485c2085"
+    },
+    {
+      "asset": "items",
+      "mode": "built-in image_gen",
+      "intent": "generate full item sheet with art references",
+      "prompt": "Use case: ui-mockup / stylized-concept. Create one finished large LANDSCAPE ITEM ART SHEET for the approved Prostokvashino blast puzzle. Image1 GAME and Image2 COMPONENTS are ONLY ART REFERENCES. Match their exact rich hand-painted2D enamel blocks, blue/cream material family, red-white rockets, navy star-bomb, rainbow disco, wooden crates and handsome tools. This is a clean full inventory of isolated game item studies on quiet plain warm cream background, not a game screenshot and not a redesign. Prefer high-resolution4:3 landscape with large readable items and ample empty space around each. Do not reproduce source scene, HUD or character.\nTitle exactly 'Простоквашино — игровые предметы'.\nFour spacious horizontal rows separated by thin subtle blue rules:\nROW1 heading 'Кубики'. SIX equal large rounded enamel blocks in a line: BLUE DROP, RED HEART, YELLOW SUN, GREEN LEAF, PURPLE STAR, ORANGE DIAMOND. Bold embossed symbols, same dimensions, polished highlights, same front view. No text inside blocks.\nROW2 heading 'Спецэлементы'. FOUR large isolated sprites with captions below: red-white rocket horizontal (caption 'Ряд'); same rocket vertical ('Столбец'); navy round bomb with yellow star and short lit fuse ('Бомба'); bright rainbow segmented orb ('Радужный шар'). Clearly different silhouette and function. No replacing rockets with arrows, no additional fifth special.\nROW3 heading 'Цели и преграды'. SIX separated examples: wooden crate intact, samecrate cracked, samecrate almostbroken; then a pink balloon with short tied end; then ONE balloon-pop VFX consisting of small pink fragments and tiny soft white puff; then a blue-droplet cube enclosed in a clearly visible transparent iridescent soap bubble. Short captions beneath in order 'Целый','Трещины','Разрушение','Шарик','Лопание','Пузырь'. Crate silhouette/scale consistent, damage progression clear. Bubble rim prominent but cube symbol visible.\nROW4 heading 'Инструменты'. FOUR large individually painted icons: wood-handled steel hammer, cream-and-green gardening glove with chamomile, dark metal anvil, two white dice with red/blue pips. Captions 'Молоток','Перчатка','Наковальня','Перемешивание'. No count badges, no UI tool wells; these are standalone icons.\nPreserve 6+4+6+4=20items, no overlaps orcropping. Every item is a finished game sprite art study with warm contact shadow, tactile enamel orwood asappropriate. No fullscreen effects, no explanatory paragraphs, no tiny microtext, no arrowdiagram substitutes, no new gameplay props. Intentional consistent rendering and large clear silhouettes.",
+      "references": [
+        "game.png",
+        "components.png"
+      ],
+      "source": "Generated image source; internal path omitted",
+      "final": "items.png",
+      "selected": true,
+      "validation": "All20requested items visibly present:6blocks,4specials,3crate stages+balloon+pop+bubble,4tools. Short Russian captions legible, no clipping.",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "sha256": "c0c00424dc91f9b1a82bc5d0d10514ae86ffcc0edc94e5aaa4bc7225dc34f49e"
+    }
+  ]
+}

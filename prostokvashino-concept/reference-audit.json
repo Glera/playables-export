@@ -1,0 +1,510 @@
+{
+  "scope": "Read-only visual audit for Round 3: Prostokvashino art with substantially closer Toon Blast 24147 UI/UX structure. No shared project, reference images, Unity, Android or Frida changes.",
+  "evidence": {
+    "selected_index": "Internal research or intermediate; path omitted",
+    "inspected_reference_screens": [
+      "reference/S048_l2_retry_loaded.png",
+      "Historical reference; not included in this public package (S029_home_level2.png)",
+      "reference/S101_failure_home_loaded.png",
+      "reference/S032_level2_pre.png",
+      "Historical reference; not included in this public package (S046_l2_retry_prelevel.png)",
+      "reference/S027_level1_reward.png",
+      "Historical reference; not included in this public package (S133_l2_reward.png)",
+      "reference/S098_auto_waste_B2.png",
+      "reference/S099_close_continue.png",
+      "reference/S043_l2_quit_dialog.png",
+      "reference/S042_l2_settings.png",
+      "reference/S012_level1_tutorial.png",
+      "Historical reference; not included in this public package (S003_unlock_game_overlay.png)"
+    ],
+    "compared_concept_screens": [
+      "previous/home.png",
+      "previous/game.png",
+      "previous/prelevel.png",
+      "previous/victory.png",
+      "Earlier Prostokvashino artwork; not included in this public package (states.png)"
+    ],
+    "sizing": {
+      "reference_game": [
+        720,
+        1600
+      ],
+      "round2_home": [
+        934,
+        1684
+      ],
+      "round2_game": [
+        934,
+        1685
+      ],
+      "round2_prelevel": [
+        934,
+        1684
+      ],
+      "round2_victory": [
+        934,
+        1685
+      ],
+      "implication": "Normalize to one portrait aspect before comparing layout. Round 2 images are materially shorter relative to width."
+    },
+    "coordinate_method": "Approximate visual landmarks, normalized to full image. Rectangles [left,top,right,bottom]; centers [x,y]. These are visual estimates, not extracted UI coordinates."
+  },
+  "gameplay": {
+    "source": "reference/S048_l2_retry_loaded.png",
+    "landmarks": {
+      "circular_character_portrait": [
+        0.017,
+        0.041,
+        0.342,
+        0.183
+      ],
+      "goals_panel": [
+        0.364,
+        0.049,
+        0.761,
+        0.129
+      ],
+      "moves_panel": [
+        0.785,
+        0.049,
+        0.982,
+        0.129
+      ],
+      "three_star_progress_strip": [
+        0.319,
+        0.14,
+        0.982,
+        0.167
+      ],
+      "board_9x9": [
+        0.018,
+        0.324,
+        0.982,
+        0.768
+      ],
+      "bottom_control_band": [
+        0,
+        0.909,
+        1,
+        1
+      ],
+      "settings_center": [
+        0.097,
+        0.953
+      ],
+      "four_tool_slot_centers": [
+        [
+          0.314,
+          0.954
+        ],
+        [
+          0.506,
+          0.954
+        ],
+        [
+          0.701,
+          0.954
+        ],
+        [
+          0.895,
+          0.954
+        ]
+      ]
+    },
+    "observed": "Portrait overlaps the top HUD on the left, goals occupy center, moves are rightmost. Three-star progress is directly beneath HUD. Board is nearly screen-wide with quiet scenery above and below. Four tool slots are locked at level 2; visible screenshot does not establish their unlocked icon order. Bottom-left gear opens a settings stack. No level-title header or top-left pause button appears.",
+    "round2_differences": [
+      "Matroskin is a large unframed bust on the right, opposite the required circular portrait on the left.",
+      "A broad Level 12 bar and top-left pause occupy the top; goals/moves are arranged beneath it.",
+      "Three-star progress bar is absent.",
+      "Board begins around 24 percent of image height rather than approximately 32 percent in this reference; aspect difference must be considered.",
+      "Four large labeled tool cards replace compact bottom slots; bottom-left settings is absent."
+    ],
+    "preserve": [
+      "Circular Matroskin portrait at top-left",
+      "Goals center, moves right",
+      "Thin star progress directly below HUD",
+      "Nearly full-width 9x9 board",
+      "Bottom-left settings plus four compact tool slots"
+    ],
+    "adaptation": "Use Prostokvashino painted wood/enamel on the same structural slots. Level 12 goals and sample counts remain invented test content; do not imply level-2 reference balance."
+  },
+  "home": {
+    "sources": [
+      "reference/S101_failure_home_loaded.png",
+      "Historical reference; not included in this public package (S029_home_level2.png)"
+    ],
+    "landmarks": {
+      "unified_top_strip": [
+        0.02,
+        0.025,
+        0.986,
+        0.129
+      ],
+      "portrait_center": [
+        0.125,
+        0.076
+      ],
+      "lives_center": [
+        0.397,
+        0.079
+      ],
+      "coins_center": [
+        0.688,
+        0.079
+      ],
+      "settings_center": [
+        0.908,
+        0.079
+      ],
+      "main_level_button": [
+        0.264,
+        0.806,
+        0.737,
+        0.884
+      ],
+      "navigation_band": [
+        0,
+        0.909,
+        1,
+        1
+      ],
+      "five_nav_centers": [
+        [
+          0.083,
+          0.954
+        ],
+        [
+          0.25,
+          0.954
+        ],
+        [
+          0.5,
+          0.929
+        ],
+        [
+          0.75,
+          0.954
+        ],
+        [
+          0.917,
+          0.954
+        ]
+      ]
+    },
+    "observed": "Top strip order is avatar, lives and full/timer status, coin balance, settings. Five lower tabs show storefront, cards, raised selected Home, people, trophy. Only selected Home label is visible; other destinations are not opened. A single centered level CTA sits immediately above navigation. S029 temporarily shows Cannon Shot instead; S101 confirms normal Level 2 CTA.",
+    "round2_differences": [
+      "No top avatar; resources are separate plates.",
+      "Large title sign, timed gift and chest-progress panel introduce a different home hierarchy.",
+      "Four labeled navigation tabs with Home first instead of five with raised Home in center.",
+      "Play button is much wider and taller than reference level CTA."
+    ],
+    "preserve": [
+      "Unified top resource bar with left avatar",
+      "One main character/world composition",
+      "Centered compact level CTA above navigation",
+      "Five tab positions with Home raised in center"
+    ],
+    "unknown": "Do not name card/people/trophy destinations or copy their internal menus based only on icons. New events/chests may be optional extensions but are not evidenced in these reference homes."
+  },
+  "prelevel": {
+    "source": "reference/S032_level2_pre.png",
+    "landmarks": {
+      "dialog": [
+        0.051,
+        0.208,
+        0.951,
+        0.731
+      ],
+      "close_center": [
+        0.913,
+        0.222
+      ],
+      "stars": [
+        0.18,
+        0.306,
+        0.82,
+        0.406
+      ],
+      "boosters": [
+        0.207,
+        0.481,
+        0.791,
+        0.558
+      ],
+      "play": [
+        0.171,
+        0.608,
+        0.832,
+        0.708
+      ]
+    },
+    "observed_order": [
+      "Level title",
+      "Three empty star outlines",
+      "Divider",
+      "Select Boosters label",
+      "Three locked booster slots",
+      "Single Play button"
+    ],
+    "round2_differences": [
+      "Goals8/4 panel replaces star area.",
+      "All three boosters are unlocked, one selected; this selection state is not evidenced by inspected level-2 screenshots.",
+      "Panel extends lower and keeps home tabs visible; reference shows a separate social-connect footer."
+    ],
+    "preserve": [
+      "Compact central modal over dimmed home",
+      "Level title and close at upper right",
+      "Three stars above booster row",
+      "Three booster slots and one main CTA"
+    ],
+    "unknown": "Unlocked booster count badges and selected visuals are proposed adaptation, not verified from these screenshots."
+  },
+  "win": {
+    "sources": [
+      "reference/S027_level1_reward.png",
+      "Historical reference; not included in this public package (S133_l2_reward.png)"
+    ],
+    "landmarks": {
+      "dialog": [
+        0.051,
+        0.203,
+        0.951,
+        0.727
+      ],
+      "close_center": [
+        0.913,
+        0.214
+      ],
+      "stars": [
+        0.175,
+        0.309,
+        0.823,
+        0.404
+      ],
+      "score_center": [
+        0.5,
+        0.432
+      ],
+      "completed_goal_center": [
+        0.51,
+        0.529
+      ],
+      "continue": [
+        0.17,
+        0.604,
+        0.831,
+        0.7
+      ]
+    },
+    "observed_order": [
+      "Level title",
+      "Three earned stars",
+      "Score number",
+      "Divider",
+      "Completed goal icon with check",
+      "Continue"
+    ],
+    "round2_differences": [
+      "Victory is a separate full scene with a large Matroskin above panel, not a central modal over dimmed board.",
+      "No level title, stars or score.",
+      "Adds coin50 reward and chest progression absent from inspected reference win.",
+      "No visible close control."
+    ],
+    "preserve": [
+      "Dimmed gameplay background",
+      "Level title and close",
+      "Stars and score before goal completion",
+      "One Continue CTA"
+    ],
+    "note": "Reference also has a bottom social-connect footer. This is observed version-specific UI, not automatic approval to introduce any external account integration."
+  },
+  "out_of_moves": {
+    "source": "reference/S098_auto_waste_B2.png",
+    "landmarks": {
+      "offer_panel": [
+        0,
+        0.166,
+        1,
+        0.594
+      ],
+      "close_center": [
+        0.947,
+        0.211
+      ],
+      "coin_balance": [
+        0.033,
+        0.1,
+        0.411,
+        0.15
+      ],
+      "plus_five_center": [
+        0.5,
+        0.34
+      ],
+      "play_on": [
+        0.195,
+        0.477,
+        0.855,
+        0.573
+      ],
+      "bundle_card": [
+        0.048,
+        0.622,
+        0.985,
+        0.809
+      ]
+    },
+    "observed_order": [
+      "Coin balance above",
+      "Out of Moves title +close",
+      "Large +5 moves reward",
+      "Add5 moves instruction",
+      "Play On button with100 coins"
+    ],
+    "secondary": "A separate Beginner's Bundle offer appears below; not necessary to reproduce for art-only structural concept.",
+    "round2_differences": [
+      "Round2 states sheet adds large Matroskin, a separate Exit button and omits balance/Play On wording.",
+      "Round2 has no separate failed/retry screen."
+    ],
+    "preserve": [
+      "Distinguish continuation offer from final failure/retry",
+      "Clearly display extra moves and coin cost",
+      "Close in upper-right"
+    ],
+    "unknown": "Price values and bundle are evidence for captured version only, not monetization specification."
+  },
+  "failed_retry": {
+    "source": "reference/S099_close_continue.png",
+    "observed_order": [
+      "Level title +close",
+      "Level failed message",
+      "Broken heart",
+      "Divider",
+      "Select Boosters label",
+      "Three booster slots",
+      "Try Again"
+    ],
+    "landmarks": {
+      "dialog": [
+        0.051,
+        0.174,
+        0.951,
+        0.731
+      ],
+      "broken_heart_center": [
+        0.5,
+        0.364
+      ],
+      "boosters": [
+        0.205,
+        0.491,
+        0.793,
+        0.568
+      ],
+      "try_again": [
+        0.171,
+        0.609,
+        0.831,
+        0.708
+      ]
+    },
+    "preserve": [
+      "Separate failed/retry state after declining continue",
+      "Reuse prelevel modal structure",
+      "Broken heart above boosters",
+      "Single retry CTA"
+    ]
+  },
+  "quit": {
+    "source": "reference/S043_l2_quit_dialog.png",
+    "landmarks": {
+      "dialog": [
+        0.051,
+        0.25,
+        0.951,
+        0.677
+      ],
+      "close_center": [
+        0.913,
+        0.259
+      ],
+      "broken_heart_center": [
+        0.5,
+        0.411
+      ],
+      "quit_button": [
+        0.163,
+        0.555,
+        0.835,
+        0.65
+      ]
+    },
+    "observed_order": [
+      "Are You Sure title +close",
+      "Large broken heart",
+      "You will lose1 life warning",
+      "Single Quit button"
+    ],
+    "round2_differences": [
+      "Adds Stay primary +Exit secondary",
+      "Uses a large character plus heart -1 instead of central broken heart"
+    ],
+    "preserve": [
+      "Warning before destructive action",
+      "One Quit action with close as dismissal",
+      "Dimmed active board behind"
+    ]
+  },
+  "settings": {
+    "source": "reference/S042_l2_settings.png",
+    "observed": "Gameplay darkens; three circular controls expand vertically above bottom-left gear: music at bottom, sound above it, exit above that. Board remains behind. Not a full settings page.",
+    "landmarks": {
+      "gear_center": [
+        0.097,
+        0.953
+      ],
+      "music_center": [
+        0.097,
+        0.864
+      ],
+      "sound_center": [
+        0.097,
+        0.785
+      ],
+      "exit_center": [
+        0.097,
+        0.707
+      ]
+    },
+    "preserve": [
+      "Bottom-left expanding vertical stack",
+      "Icon-only compact circular controls"
+    ],
+    "unknown": "Do not infer additional settings, language/account toggles or navigation from this frame."
+  },
+  "tutorial": {
+    "source": "reference/S012_level1_tutorial.png",
+    "observed": "Dimmed gameplay and HUD; bright circular portrait; bordered cream instruction panel positioned over upper board; large hand indicates a specific group. Board remains in its existing place.",
+    "preserve": [
+      "Use the existing gameplay shell",
+      "Focus on active group with dimming and hand",
+      "Keep portrait in HUD; do not add another large hero beside a miniature board"
+    ],
+    "round2_difference": "Our state-sheet tutorial is an illustrative cropped study with separate large Matroskin; it is not an actual reference screen layout."
+  },
+  "unlock": {
+    "candidate_checked": "Historical reference; not included in this public package (S003_unlock_game_overlay.png)",
+    "conclusion": "Filename is misleading: the image is a cannon tutorial instructing Tap on the items to fire the cannon. It is not booster unlock.",
+    "status": "No actual booster-unlock screenshot found in inspected gameplay screenshot set. Recovery PNG resources do not establish complete screen layout.",
+    "guidance": "Round3 booster-unlock can be clearly labeled proposed UI using common modal language; do not claim screenshot fidelity."
+  },
+  "overall_priority": [
+    "Correct gameplay portrait and HUD ordering first",
+    "Match portrait aspect and vertical zones",
+    "Restore bottom-left settings and compact tools",
+    "Restore five-tab home shell",
+    "Restore star/score structure in prelevel and victory",
+    "Separate continue offer, failure/retry and quit",
+    "Keep all unevidenced menus explicitly unknown"
+  ]
+}

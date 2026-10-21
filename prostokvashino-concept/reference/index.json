@@ -1,0 +1,65 @@
+[
+  {
+    "screen": "game",
+    "source": "reference/S048_l2_retry_loaded.png",
+    "gallery_file": "reference/S048_l2_retry_loaded.png",
+    "sha256": "932663ac4d3148b459b5bc08878ca51b10b6c44a9e65ddabe24de220ba078c37",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "home",
+    "source": "reference/S101_failure_home_loaded.png",
+    "gallery_file": "reference/S101_failure_home_loaded.png",
+    "sha256": "0c40b28cdc50930cc1c12b8ca5dae90e8a6329677674998ace87bc15f4d4d69b",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "prelevel",
+    "source": "reference/S032_level2_pre.png",
+    "gallery_file": "reference/S032_level2_pre.png",
+    "sha256": "0061678e26d37913db3b99ec4c6fd15beb75af7bc8cdc10d8364542c49f9022c",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "victory",
+    "source": "reference/S027_level1_reward.png",
+    "gallery_file": "reference/S027_level1_reward.png",
+    "sha256": "518bbb42530cc39e5654a15df2311270eb47e47c5683405cde1f75d425763931",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "continue",
+    "source": "reference/S098_auto_waste_B2.png",
+    "gallery_file": "reference/S098_auto_waste_B2.png",
+    "sha256": "656d0a67b43444d7045c9aed07e4a724d9a19baa4770b476ff34a05f0612a8ac",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "failed",
+    "source": "reference/S099_close_continue.png",
+    "gallery_file": "reference/S099_close_continue.png",
+    "sha256": "b552427d28b350a1545c0e7bb9ba770679e55508a831e149c08a6a27db913e5c",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "quit",
+    "source": "reference/S043_l2_quit_dialog.png",
+    "gallery_file": "reference/S043_l2_quit_dialog.png",
+    "sha256": "8f10cdfb66e92cdd3a403a4c8d01ea173f768f8ab421db3f6655b2711f81984d",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "settings",
+    "source": "reference/S042_l2_settings.png",
+    "gallery_file": "reference/S042_l2_settings.png",
+    "sha256": "edeba6e3a45a6e2839766c5b7a7a04ff0729276f25e374bbf41cdf748e79e49a",
+    "role": "Read-only comparison evidence; not generated artwork"
+  },
+  {
+    "screen": "tutorial",
+    "source": "reference/S012_level1_tutorial.png",
+    "gallery_file": "reference/S012_level1_tutorial.png",
+    "sha256": "f17d88609caecc9999433136093e8f43fa5869e4ee07efff3796824013d0efa7",
+    "role": "Read-only comparison evidence; not generated artwork"
+  }
+]
